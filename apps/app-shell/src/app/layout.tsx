@@ -19,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               { href: '/drafts', icon: '📝', label: 'Drafts' },
               { href: '/queues', icon: '⚡', label: 'Queues' },
               { href: '/analytics', icon: '📈', label: 'Analytics' },
+              { href: '/alerts', icon: '🔔', label: 'Alerts' },
               { href: '/system', icon: '⚙️', label: 'System' },
               { href: '/settings', icon: '🔧', label: 'Settings' },
             ].map(item => (
@@ -30,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <a href="/login" className="nav-item" style={{ borderTop: '1px solid var(--border)', paddingTop: 12, marginTop: 8 }}>
               <span className="nav-icon">🔑</span>Login
             </a>
-            <div style={{ fontSize: 11, color: 'var(--muted)', padding: '8px 14px' }}>api.45cm.com · v0.3.0</div>
+            <div style={{ fontSize: 11, color: 'var(--muted)', padding: '8px 14px' }}>api.45cm.com · v0.5.0</div>
           </nav>
           <main className="main">{children}</main>
         </div>
