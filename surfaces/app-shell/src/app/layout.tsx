@@ -14,6 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {[
               { href:'/dashboard', icon:'📊', label:'Dashboard' },
               { href:'/campaigns', icon:'🎯', label:'Campaigns' },
+              { href:'/intelligence', icon:'🧠', label:'Intelligence' },
               { href:'/drafts', icon:'📝', label:'Drafts' },
               { href:'/calendar', icon:'📅', label:'Calendar' },
               { href:'/brand', icon:'🎨', label:'Brand Studio' },
@@ -29,9 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </a>
             ))}
             <div style={{ flex: 1 }} />
-            <a href="/queues" className="nav-item" style={{fontSize:12,color:'var(--border)'}}>
-              <span className="nav-icon">⚙️</span>System
-            </a>
+            <a href="/queues" className="nav-item" style={{fontSize:12,color:'var(--border)'}}><span className="nav-icon">⚙️</span>System</a>
             <div style={{ fontSize: 11, color: 'var(--muted)', padding: '8px 14px', borderTop:'1px solid var(--border)',marginTop:4 }}>v0.7.0 · Marketing Engine</div>
           </nav>
           <main className="main">{children}</main>
