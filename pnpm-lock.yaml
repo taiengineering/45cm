@@ -324,6 +324,9 @@ importers:
       '@45cm/core-ai-runtime':
         specifier: workspace:*
         version: link:../../packages/core-ai-runtime
+      '@45cm/core-billing-runtime':
+        specifier: workspace:*
+        version: link:../../packages/core-billing-runtime
       '@45cm/core-db-runtime':
         specifier: workspace:*
         version: link:../../packages/core-db-runtime
@@ -336,6 +339,9 @@ importers:
       '@45cm/core-shared-types':
         specifier: workspace:*
         version: link:../../packages/core-shared-types
+      '@45cm/core-workspace-runtime':
+        specifier: workspace:*
+        version: link:../../packages/core-workspace-runtime
       '@fastify/cors':
         specifier: ^9.0.0
         version: 9.0.1
@@ -454,6 +460,22 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  packages/core-billing-runtime:
+    dependencies:
+      '@45cm/core-shared-types':
+        specifier: workspace:*
+        version: link:../core-shared-types
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.105.4
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   packages/core-db-runtime:
     dependencies:
       '@45cm/core-shared-types':
@@ -533,6 +555,22 @@ importers:
 
   packages/core-shared-types:
     devDependencies:
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  packages/core-workspace-runtime:
+    dependencies:
+      '@45cm/core-shared-types':
+        specifier: workspace:*
+        version: link:../core-shared-types
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.105.4
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
       typescript:
         specifier: ^5.4.0
         version: 5.9.3
