@@ -1,0 +1,36 @@
+{
+  "name": "marketing-engine",
+  "version": "1.0.0",
+  "description": "AI Marketing Operations Engine — Collect, Generate, Humanize, Approve, Publish, Track",
+  "capabilities": [
+    "collect",
+    "classify",
+    "generate",
+    "humanize",
+    "approval",
+    "publish",
+    "analytics",
+    "campaign",
+    "lead_tracking",
+    "brand_voice",
+    "channel_adapter"
+  ],
+  "channels": ["naver_kin", "linkedin", "facebook", "naver_blog"],
+  "dependencies": {
+    "required": ["redis", "openai"],
+    "replaceable": ["supabase"],
+    "optional": ["slack", "linkedin", "facebook"]
+  },
+  "env": [
+    "OPENAI_API_KEY",
+    "REDIS_URL",
+    "SUPABASE_URL",
+    "SUPABASE_SERVICE_KEY",
+    "NAVER_CLIENT_ID",
+    "NAVER_CLIENT_SECRET",
+    "SLACK_BOT_TOKEN",
+    "SLACK_CHANNEL_ID",
+    "LINKEDIN_CLIENT_ID",
+    "LINKEDIN_CLIENT_SECRET"
+  ]
+}

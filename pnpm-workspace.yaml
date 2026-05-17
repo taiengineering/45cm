@@ -1,4 +1,9 @@
 packages:
-  - 'apps/*'
-  - 'packages/*'
-  - 'domain-packs/*'
+  - 'engines/marketing-engine/api'
+  - 'engines/marketing-engine/worker'
+  - 'engines/marketing-engine/scheduler'
+  - 'engines/marketing-engine/runtime/*'
+  - 'engines/marketing-engine/channels/*'
+  - 'engines/marketing-engine/domain/*'
+  - 'platform/*'
+  - 'surfaces/*'
