@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
-export const metadata: Metadata = { title: '45cm Operations Console', description: '45cm Operational Runtime Platform' }
+export const metadata: Metadata = { title: '45cm Marketing Engine', description: 'AI Marketing Operations Engine' }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -13,13 +13,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <span className="sidebar-badge">Marketing Engine</span>
             {[
               { href:'/dashboard', icon:'📊', label:'Dashboard' },
+              { href:'/campaigns', icon:'🎯', label:'Campaigns' },
               { href:'/drafts', icon:'📝', label:'Drafts' },
               { href:'/calendar', icon:'📅', label:'Calendar' },
-              { href:'/workflows', icon:'🔄', label:'Workflows' },
-              { href:'/queues', icon:'⚡', label:'Queues' },
+              { href:'/brand', icon:'🎨', label:'Brand Studio' },
+              { href:'/leads', icon:'📌', label:'Leads' },
+              { href:'/engagement', icon:'💬', label:'Engagement' },
               { href:'/analytics', icon:'📈', label:'Analytics' },
-              { href:'/alerts', icon:'🔔', label:'Alerts' },
-              { href:'/system', icon:'⚙️', label:'System' },
               { href:'/settings', icon:'🔧', label:'Settings' },
             ].map(item => (
               <a key={item.href} href={item.href} className="nav-item">
@@ -27,10 +27,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </a>
             ))}
             <div style={{ flex: 1 }} />
-            <a href="/login" className="nav-item" style={{ borderTop: '1px solid var(--border)', paddingTop: 12, marginTop: 8 }}>
-              <span className="nav-icon">🔑</span>Login
+            <a href="/queues" className="nav-item" style={{fontSize:12,color:'var(--border)'}}>
+              <span className="nav-icon">⚙️</span>System
             </a>
-            <div style={{ fontSize: 11, color: 'var(--muted)', padding: '8px 14px' }}>v0.7.0 · Marketing Engine</div>
+            <div style={{ fontSize: 11, color: 'var(--muted)', padding: '8px 14px', borderTop:'1px solid var(--border)',marginTop:4 }}>v0.7.0 · Marketing Engine</div>
           </nav>
           <main className="main">{children}</main>
         </div>
