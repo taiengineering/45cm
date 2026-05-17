@@ -6,8 +6,8 @@ export default function EngagementPage() {
   const [engagements, setEngagements] = useState<any[]>([])
   const [comments, setComments] = useState<any[]>([])
   useEffect(() => {
-    fetch(API+'/engagement').then(r=>r.json()).then(setEngagements).catch(()=>{})
-    fetch(API+'/comments').then(r=>r.json()).then(setComments).catch(()=>{})
+    fetch(API+'/engagement').then(r=>r.json()).then(d=>Array.isArray(d)?setEngagements(d):null).catch(()=>{})
+    fetch(API+'/comments').then(r=>r.json()).then(d=>Array.isArray(d)?setComments(d):null).catch(()=>{})
   }, [])
 
   return (
