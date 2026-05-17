@@ -1,0 +1,15 @@
+{
+  "name": "45cm",
+  "private": true,
+  "description": "45cm Operational Runtime Platform",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "dev:marketing": "concurrently -n api,worker -c blue,green \"pnpm --filter @45cm/marketing-api dev\" \"pnpm --filter @45cm/marketing-worker dev\"",
+    "dev:web": "pnpm --filter @45cm/marketing-web dev",
+    "build:mkt": "pnpm --filter @45cm/marketing-api... --filter @45cm/marketing-worker... build",
+    "start": "node start-mkt.js"
+  },
+  "engines": { "node": ">=18" },
+  "devDependencies": { "concurrently": "^8.2.0", "turbo": "^2.0.0" }
+}
