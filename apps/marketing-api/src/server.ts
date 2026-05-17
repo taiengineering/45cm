@@ -9,10 +9,12 @@ import { collect } from '@45cm/channel-naver-kin';
 const app = Fastify({ logger: true });
 app.register(cors, { origin: true });
 
-app.get('/health', async () => ({ status:'healthy', engine:'marketing-engine', v:'0.2.0', ts:new Date().toISOString() }));
+// ====== Health + Debug ======
+app.get('/health', async () => ({ status:'healthy', engine:'marketing-engine', v:'0.3.0', ts:new Date().toISOString() }));
 app.get('/debug/openai', async (_r, reply) => reply.send(await debugOpenAI()));
 app.get('/debug/redis', async (_r, reply) => reply.send(await debugRedis()));
 
+// ====== Drafts ======
 app.get('/drafts', async (req: any, reply) => {
   const ws=req.query.ws??'a0000000-0000-0000-0000-000000000001';
   let q=mkt().from('drafts').select('*').eq('workspace_id',ws).order('created_at',{ascending:false}).limit(parseInt(req.query.limit??'50',10));
@@ -20,11 +22,31 @@ app.get('/drafts', async (req: any, reply) => {
   const {data,error}=await q; if(error) return reply.status(500).send({error:error.message}); return reply.send(data??[]);
 });
 
+app.get('/drafts/:id', async (req: any, reply) => {
+  const {data,error}=await mkt().from('drafts').select('*').eq('id',req.params.id).single();
+  if(error) return reply.status(404).send({error:'Draft not found'});
+  // Get approval history
+  const {data:approvals}=await mkt().from('approval_requests').select('*').eq('draft_id',req.params.id).order('created_at',{ascending:false});
+  // Get publish jobs
+  const {data:publishes}=await mkt().from('publish_jobs').select('*').eq('draft_id',req.params.id).order('created_at',{ascending:false});
+  // Get AI usage
+  let usage = null;
+  if(data.ai_usage_log_id) { const r=await coreAi().from('ai_usage_log').select('*').eq('id',data.ai_usage_log_id).single(); usage=r.data; }
+  return reply.send({...data, approvals: approvals??[], publishes: publishes??[], ai_usage: usage});
+});
+
+// ====== Analytics ======
 app.get('/analytics/summary', async (req: any, reply) => {
   const ws=req.query.ws??'a0000000-0000-0000-0000-000000000001';
-  const [d,c,l,u]=await Promise.all([mkt().from('drafts').select('*',{count:'exact',head:true}).eq('workspace_id',ws),mkt().from('analytics_events').select('*',{count:'exact',head:true}).eq('workspace_id',ws).eq('event_type','cta.clicked'),mkt().from('leads').select('*',{count:'exact',head:true}).eq('workspace_id',ws),coreAi().from('ai_usage_log').select('estimated_cost_usd').eq('workspace_id',ws)]);
+  const [d,c,l,u,p]=await Promise.all([
+    mkt().from('drafts').select('*',{count:'exact',head:true}).eq('workspace_id',ws),
+    mkt().from('analytics_events').select('*',{count:'exact',head:true}).eq('workspace_id',ws).eq('event_type','cta.clicked'),
+    mkt().from('leads').select('*',{count:'exact',head:true}).eq('workspace_id',ws),
+    coreAi().from('ai_usage_log').select('estimated_cost_usd').eq('workspace_id',ws),
+    mkt().from('publish_jobs').select('*',{count:'exact',head:true}).eq('workspace_id',ws).eq('status','published'),
+  ]);
   const cost=(u.data??[]).reduce((s:number,r:any)=>s+(r.estimated_cost_usd??0),0);
-  return reply.send({drafts:d.count??0,cta_clicks:c.count??0,leads:l.count??0,ai_cost_usd:Math.round(cost*1e6)/1e6});
+  return reply.send({drafts:d.count??0,cta_clicks:c.count??0,leads:l.count??0,ai_cost_usd:Math.round(cost*1e6)/1e6,published:p.count??0});
 });
 
 app.get('/analytics/events', async (req: any, reply) => {
@@ -33,6 +55,7 @@ app.get('/analytics/events', async (req: any, reply) => {
   if(error) return reply.status(500).send({error:error.message}); return reply.send(data??[]);
 });
 
+// ====== Queues ======
 app.get('/ops/queues', async (_r, reply) => {
   const names=[MARKETING_QUEUES.DRAFT,MARKETING_QUEUES.HUMANIZE,MARKETING_QUEUES.COLLECT,MARKETING_QUEUES.CLASSIFY,MARKETING_QUEUES.APPROVAL,MARKETING_QUEUES.PUBLISH];
   const result:Record<string,unknown>={};
@@ -40,6 +63,23 @@ app.get('/ops/queues', async (_r, reply) => {
   return reply.send({ts:new Date().toISOString(),queues:result});
 });
 
+// ====== Workspace ======
+app.get('/workspace/settings', async (req: any, reply) => {
+  const ws=req.query.ws??'a0000000-0000-0000-0000-000000000001';
+  const {data,error}=await mkt().from('workspace_settings').select('*').eq('workspace_id',ws).single();
+  if(error) return reply.status(404).send({error:'Settings not found'});
+  return reply.send(data);
+});
+
+app.put('/workspace/settings', async (req: any, reply) => {
+  const {workspaceId,...updates}=req.body;
+  const ws=workspaceId??'a0000000-0000-0000-0000-000000000001';
+  const {data,error}=await mkt().from('workspace_settings').update({...updates,updated_at:new Date().toISOString()}).eq('workspace_id',ws).select().single();
+  if(error) return reply.status(500).send({error:error.message});
+  return reply.send(data);
+});
+
+// ====== Draft Generate ======
 app.post('/draft/generate', async (req: any, reply) => {
   const {workspaceId,input,contentId,brandVoice}=req.body;
   if(!workspaceId||!input) return reply.status(400).send({error:'workspaceId and input required'});
@@ -52,6 +92,7 @@ app.post('/draft/generate', async (req: any, reply) => {
   return reply.status(201).send({draft_id:draft.id,trace_id:traceId,model:ai.model,cost_usd:ai.usage.estimatedCostUsd,queued});
 });
 
+// ====== Collect ======
 app.post('/collect', async (req: any, reply) => {
   const {workspaceId,keyword,maxResults}=req.body; if(!workspaceId||!keyword) return reply.status(400).send({error:'required'});
   const items=await collect({workspaceId,keyword,maxResults}); const saved=[];
@@ -59,6 +100,23 @@ app.post('/collect', async (req: any, reply) => {
   return reply.send({keyword,collected:saved.length,contents:saved});
 });
 
+// ====== Publish ======
+app.post('/publish', async (req: any, reply) => {
+  const {workspaceId,draftId,channel}=req.body;
+  if(!workspaceId||!draftId) return reply.status(400).send({error:'required'});
+  const draft=await getDraftById(draftId) as any;
+  const content=draft.humanized_body||draft.body||'';
+  // Create publish job
+  const {data:job,error}=await mkt().from('publish_jobs').insert({workspace_id:workspaceId,draft_id:draftId,channel:channel||'linkedin',status:'pending',metadata:{trace_id:draft.metadata?.trace_id}}).select().single();
+  if(error) return reply.status(500).send({error:error.message});
+  // Enqueue
+  try { await enqueue(MARKETING_QUEUES.PUBLISH,'publish',{workspace_id:workspaceId,draft_id:draftId,publish_job_id:job.id,channel:channel||'linkedin',content,trace_id:draft.metadata?.trace_id}); }
+  catch(e:any){ return reply.status(500).send({error:'enqueue failed: '+e.message}); }
+  await updateDraft(draftId,{status:'publishing'});
+  return reply.send({publish_job_id:job.id,status:'pending'});
+});
+
+// ====== Approval ======
 app.post('/approval/request', async (req: any, reply) => {
   const {workspaceId,draftId,keyword,channel}=req.body; if(!workspaceId||!draftId) return reply.status(400).send({error:'required'});
   const draft=await getDraftById(draftId) as any; await updateDraft(draftId,{status:'pending_approval'});
@@ -77,6 +135,7 @@ app.post('/approval/callback', async (req: any, reply) => {
   await updateApprovalStatus(id,m[cmd]??'rejected',p?.user?.id); return reply.send({text:cmd+' done'});
 });
 
+// ====== CTA ======
 app.get('/c/:ctaId', async (req: any, reply) => {
   const {ctaId}=req.params,ws=req.query.ws??'unknown';
   await insertAnalyticsEvent({workspace_id:ws,event_type:'cta.clicked',subject_type:'cta',subject_id:ctaId,metadata:{ref:req.query.ref,ip:req.ip,ua:req.headers['user-agent']}});
@@ -85,4 +144,4 @@ app.get('/c/:ctaId', async (req: any, reply) => {
 });
 
 const port=parseInt(process.env.PORT??'3100',10);
-app.listen({port,host:'0.0.0.0'}).then(()=>console.log(JSON.stringify({level:'info',msg:'api.started',port})));
+app.listen({port,host:'0.0.0.0'}).then(()=>console.log(JSON.stringify({level:'info',msg:'api.started',port,version:'0.3.0'})));
