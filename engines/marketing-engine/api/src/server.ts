@@ -10,15 +10,16 @@ import { getMonthlyUsage, getUsageHistory, getPlan, getInvoices } from '@45cm/co
 import { createAlert, resolveAlert, getActiveAlerts, getAllAlerts, checkQueueHealth } from '@45cm/core-alert-runtime';
 import { listWorkflows, getWorkflow, createWorkflow, startRun, listRuns, getRun, getRunLogs } from '@45cm/core-workflow-runtime';
 import { registerStabilizationRoutes } from './routes-stabilization';
-import { createClient } from '@supabase/supabase-js';
+import { registerChannelRoutes } from './routes-channels';
 
 const app = Fastify({ logger: true });
 app.register(cors, { origin: true });
 const WS = 'a0000000-0000-0000-0000-000000000001';
 const PUBLISH_MODE = process.env.PUBLISH_MODE || 'mock';
 
-// Register stabilization routes
+// Register route modules
 registerStabilizationRoutes(app, mkt, WS);
+registerChannelRoutes(app, mkt, WS);
 
 app.get('/health', async () => ({ status:'healthy', engine:'marketing-engine', v:'0.7.0', publish_mode: PUBLISH_MODE, ts:new Date().toISOString() }));
 app.get('/debug/openai', async (_r, rp) => rp.send(await debugOpenAI()));
@@ -46,7 +47,7 @@ app.put('/workspace/settings', async (rq: any, rp) => { const{workspaceId,...u}=
 app.get('/workspace/plan', async (rq: any, rp) => { const ws=rq.query.ws??WS; const[p,u]=await Promise.all([getPlan(ws),getMonthlyUsage(ws)]); return rp.send({plan:p??{plan:'free'},usage:u??{}}); });
 app.get('/workspace/members', async (rq: any, rp) => { const{data}=await mkt().from('workspace_members').select('*').eq('workspace_id',rq.query.ws??WS); return rp.send(data??[]); });
 app.post('/workspace/invite', async (rq: any, rp) => { const{workspaceId,email,role}=rq.body;const ws=workspaceId??WS; if(!email)return rp.status(400).send({error:'email required'}); const{data,error}=await mkt().from('workspace_invites').insert({workspace_id:ws,email,role:role??'operator'}).select().single(); if(error)return rp.status(500).send({error:error.message}); return rp.send(data); });
-app.get('/workspace/integrations', async (rq: any, rp) => { const{data}=await mkt().from('workspace_integrations').select('id,workspace_id,provider,status,expires_at,created_at').eq('workspace_id',rq.query.ws??WS); return rp.send(data??[]); });
+app.get('/workspace/integrations', async (rq: any, rp) => { const{data}=await mkt().from('workspace_integrations').select('id,workspace_id,provider,status,expires_at,capabilities,created_at').eq('workspace_id',rq.query.ws??WS); return rp.send(data??[]); });
 
 // Admin
 app.get('/admin/stats', async (_r, rp) => { const[ws,dr,pb,u]=await Promise.all([mkt().from('workspaces').select('*',{count:'exact',head:true}),mkt().from('drafts').select('*',{count:'exact',head:true}),mkt().from('publish_jobs').select('*',{count:'exact',head:true}).eq('status','published'),coreAi().from('ai_usage_log').select('estimated_cost_usd')]); const cost=(u.data??[]).reduce((s:number,r:any)=>s+(r.estimated_cost_usd??0),0); return rp.send({workspaces:ws.count??0,drafts:dr.count??0,published:pb.count??0,total_ai_cost:Math.round(cost*1e6)/1e6}); });
@@ -60,21 +61,16 @@ app.post('/workflows/:id/run', async (rq: any, rp) => { const w=await getWorkflo
 app.get('/workflows/runs', async (rq: any, rp) => rp.send(await listRuns(rq.query.ws??WS)));
 app.get('/workflows/runs/:id', async (rq: any, rp) => { const r=await getRun(rq.params.id); if(!r)return rp.status(404).send({error:'not found'}); const logs=await getRunLogs(rq.params.id); return rp.send({...r,logs}); });
 
-// OAuth
-app.get('/oauth/linkedin/start', async (rq: any, rp) => { const cid=process.env.LINKEDIN_CLIENT_ID; if(!cid)return rp.status(500).send({error:'LINKEDIN_CLIENT_ID not configured'}); const state=Buffer.from(JSON.stringify({ws:rq.query.ws??WS})).toString('base64url'); return rp.send({url:`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${cid}&redirect_uri=${encodeURIComponent('https://api.45cm.com/oauth/linkedin/callback')}&state=${state}&scope=openid%20profile%20w_member_social`}); });
-app.get('/oauth/linkedin/callback', async (rq: any, rp) => { const{code,state}=rq.query;if(!code)return rp.status(400).send({error:'Missing code'}); const{ws}=JSON.parse(Buffer.from(state,'base64url').toString()); const cid=process.env.LINKEDIN_CLIENT_ID,csec=process.env.LINKEDIN_CLIENT_SECRET; if(!cid||!csec)return rp.status(500).send({error:'not configured'}); const r=await fetch('https://www.linkedin.com/oauth/v2/accessToken',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({grant_type:'authorization_code',code:code as string,redirect_uri:'https://api.45cm.com/oauth/linkedin/callback',client_id:cid,client_secret:csec}).toString()}); const t=await r.json() as any; if(t.error)return rp.status(400).send({error:t.error_description}); await saveIntegration(ws,'linkedin',{access_token:t.access_token,refresh_token:t.refresh_token,expires_at:new Date(Date.now()+t.expires_in*1000).toISOString()}); return rp.redirect(302,'https://app.45cm.com/settings?linkedin=connected'); });
-
 // Draft Generate (with Approval Gate + Usage Guard)
 app.post('/draft/generate', async (rq: any, rp) => { const{workspaceId,input,contentId,brandVoice,campaignId}=rq.body; if(!workspaceId||!input)return rp.status(400).send({error:'required'}); const lim=await checkUsageLimit(workspaceId,'draft'); if(!lim.allowed)return rp.status(429).send({error:'usage_limit_exceeded',reason:lim.reason}); const traceId=uuid(); let ai;try{ai=await aiGenerate({workspaceId,engine:'marketing',capability:'marketing.generate_draft',input,context:{trace_id:traceId}});}catch(err:any){const s=err.status??'failed';try{const dr=await insertDraft({workspace_id:workspaceId,source_content_id:contentId,draft_type:'reply',body:'',status:s,campaign_id:campaignId,metadata:{trace_id:traceId,error:err.message}});return rp.status(502).send({error:'OpenAI '+s,draft_id:dr.id,trace_id:traceId});}catch(_){return rp.status(502).send({error:'OpenAI '+s,trace_id:traceId});}} const log=await insertUsageLog({workspace_id:workspaceId,engine:'marketing',capability:'marketing.generate_draft',provider:'openai',model:ai.model,prompt_tokens:ai.usage.promptTokens,completion_tokens:ai.usage.completionTokens,estimated_cost_usd:ai.usage.estimatedCostUsd,latency_ms:ai.latencyMs,status:'success',trace_id:traceId}); const draft=await insertDraft({workspace_id:workspaceId,source_content_id:contentId,draft_type:'reply',body:ai.output,ai_usage_log_id:log.id,campaign_id:campaignId,metadata:{trace_id:traceId}}); await incrementUsage(workspaceId,'draft_count');await incrementUsage(workspaceId,'ai_tokens',ai.usage.promptTokens+ai.usage.completionTokens);await incrementUsage(workspaceId,'ai_cost_usd',ai.usage.estimatedCostUsd); let queued=false;try{await enqueue(MARKETING_QUEUES.HUMANIZE,'humanize',{workspace_id:workspaceId,draft_id:draft.id,body:ai.output,trace_id:traceId,brand_voice:brandVoice??'tai'});queued=true;}catch(e:any){} return rp.status(201).send({draft_id:draft.id,trace_id:traceId,model:ai.model,queued}); });
 
 // Collect
 app.post('/collect', async (rq: any, rp) => { const{workspaceId,keyword,maxResults}=rq.body;if(!workspaceId||!keyword)return rp.status(400).send({error:'required'}); const items=await collect({workspaceId,keyword,maxResults});const saved=[]; for(const i of items){saved.push(await insertContent({workspace_id:workspaceId,source:i.source,external_id:i.externalId,content_type:'question',title:i.title,body:i.body,url:i.url,raw_payload:i.rawPayload,collected_at:i.collectedAt}));} return rp.send({keyword,collected:saved.length,contents:saved}); });
 
-// Publish (with Approval Gate)
+// Publish (with Approval Gate + provider-agnostic)
 app.post('/publish', async (rq: any, rp) => {
   const{workspaceId,draftId,channel}=rq.body;if(!workspaceId||!draftId)return rp.status(400).send({error:'required'});
   const lim=await checkUsageLimit(workspaceId,'publish');if(!lim.allowed)return rp.status(429).send({error:'usage_limit_exceeded',reason:lim.reason});
-  // Approval Gate: check if approval is required
   const{data:settings}=await mkt().from('workspace_settings').select('approval_required').eq('workspace_id',workspaceId).single();
   if(settings?.approval_required) {
     const{data:approvals}=await mkt().from('approval_requests').select('status').eq('draft_id',draftId).eq('status','approved').limit(1);
@@ -90,11 +86,11 @@ app.post('/publish', async (rq: any, rp) => {
 });
 
 // Approval
-app.post('/approval/request', async (rq: any, rp) => { const{workspaceId,draftId,keyword}=rq.body;if(!workspaceId||!draftId)return rp.status(400).send({error:'required'}); const draft=await getDraftById(draftId) as any;await updateDraft(draftId,{status:'pending_approval'}); const approval=await insertApprovalRequest({workspace_id:workspaceId,draft_id:draftId}); const body=draft.humanized_body??draft.body??'';const preview=body.length>500?body.slice(0,500)+'...':body; const slk=process.env.SLACK_BOT_TOKEN,ch=process.env.SLACK_CHANNEL_ID; if(slk&&ch){await fetch('https://slack.com/api/chat.postMessage',{method:'POST',headers:{Authorization:'Bearer '+slk,'Content-Type':'application/json'},body:JSON.stringify({channel:ch,text:'Draft approval',blocks:[{type:'header',text:{type:'plain_text',text:'📝 Draft Approval'}},{type:'section',text:{type:'mrkdwn',text:'```'+preview+'```'}},{type:'actions',elements:[{type:'button',text:{type:'plain_text',text:'✅ Approve'},style:'primary',action_id:'approve',value:'approve:'+approval.id},{type:'button',text:{type:'plain_text',text:'❌ Reject'},style:'danger',action_id:'reject',value:'reject:'+approval.id}]}]})});} await insertAuditLog(workspaceId,'approval.requested',undefined,'draft',draftId); return rp.send({approval_id:approval.id,status:'pending'}); });
+app.post('/approval/request', async (rq: any, rp) => { const{workspaceId,draftId}=rq.body;if(!workspaceId||!draftId)return rp.status(400).send({error:'required'}); const draft=await getDraftById(draftId) as any;await updateDraft(draftId,{status:'pending_approval'}); const approval=await insertApprovalRequest({workspace_id:workspaceId,draft_id:draftId}); const body=draft.humanized_body??draft.body??'';const preview=body.length>500?body.slice(0,500)+'...':body; const slk=process.env.SLACK_BOT_TOKEN,ch=process.env.SLACK_CHANNEL_ID; if(slk&&ch){await fetch('https://slack.com/api/chat.postMessage',{method:'POST',headers:{Authorization:'Bearer '+slk,'Content-Type':'application/json'},body:JSON.stringify({channel:ch,text:'Draft approval',blocks:[{type:'header',text:{type:'plain_text',text:'📝 Draft Approval'}},{type:'section',text:{type:'mrkdwn',text:'```'+preview+'```'}},{type:'actions',elements:[{type:'button',text:{type:'plain_text',text:'✅ Approve'},style:'primary',action_id:'approve',value:'approve:'+approval.id},{type:'button',text:{type:'plain_text',text:'❌ Reject'},style:'danger',action_id:'reject',value:'reject:'+approval.id}]}]})});} await insertAuditLog(workspaceId,'approval.requested',undefined,'draft',draftId); return rp.send({approval_id:approval.id,status:'pending'}); });
 app.post('/approval/callback', async (rq: any, rp) => { const p=typeof rq.body==='string'?JSON.parse(rq.body):rq.body?.payload?JSON.parse(rq.body.payload):rq.body; const a=p?.actions?.[0];if(!a)return rp.status(400).send({error:'no action'}); const[cmd,id]=(a.value??'').split(':');if(!id)return rp.status(400).send({error:'bad'}); await updateApprovalStatus(id,cmd==='approve'?'approved':'rejected',p?.user?.id);return rp.send({text:cmd+' done'}); });
 
 // CTA
 app.get('/c/:ctaId', async (rq: any, rp) => { const{ctaId}=rq.params,ws=rq.query.ws??'unknown'; await insertAnalyticsEvent({workspace_id:ws,event_type:'cta.clicked',subject_type:'cta',subject_id:ctaId,metadata:{ref:rq.query.ref,ip:rq.ip}}); if(rq.query.ref)await insertLead({workspace_id:ws,source:'cta_click',source_ref_id:ctaId}); await incrementUsage(ws,'cta_clicks').catch(()=>{}); return rp.redirect(302,'https://taieng.co.kr/diagnosis?utm_source=45cm&utm_campaign='+ctaId); });
 
 const port=parseInt(process.env.PORT??'3100',10);
-app.listen({port,host:'0.0.0.0'}).then(()=>console.log(JSON.stringify({level:'info',msg:'api.started',port,version:'0.7.0',publish_mode:PUBLISH_MODE})));
+app.listen({port,host:'0.0.0.0'}).then(()=>console.log(JSON.stringify({level:'info',msg:'api.started',port,version:'0.7.0',publish_mode:PUBLISH_MODE,channels:'provider-agnostic'})));
