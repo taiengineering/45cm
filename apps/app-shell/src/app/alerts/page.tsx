@@ -6,7 +6,7 @@ export default function AlertsPage() {
   const [alerts, setAlerts] = useState<any[]>([])
   const [showAll, setShowAll] = useState(false)
   const reload = () => fetch(API+"/ops/alerts"+(showAll?'':'?active=true')).then(r=>r.json()).then(setAlerts).catch(()=>{})
-  useEffect(reload, [showAll])
+  useEffect(() => { reload() }, [showAll])
 
   const resolve = async (id:string) => { await fetch(API+"/ops/alerts/"+id+"/resolve",{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}); reload() }
 
