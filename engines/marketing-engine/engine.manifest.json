@@ -1,7 +1,8 @@
 {
   "name": "marketing-engine",
   "version": "1.0.0",
-  "description": "AI Marketing Operations Engine — Collect, Generate, Humanize, Approve, Publish, Track",
+  "description": "AI Marketing Operations Engine — Reach, Engage, Convert",
+  "boundary": "CTA 이전까지 책임. CTA 이후는 관재엔진 책임.",
   "capabilities": [
     "collect",
     "classify",
@@ -9,28 +10,32 @@
     "humanize",
     "approval",
     "publish",
-    "analytics",
     "campaign",
-    "lead_tracking",
+    "engagement",
+    "analytics",
+    "lead_generation",
     "brand_voice",
-    "channel_adapter"
+    "channel_operations"
   ],
   "channels": ["naver_kin", "linkedin", "facebook", "naver_blog"],
+  "events_output": [
+    "lead.generated",
+    "cta.clicked",
+    "campaign.completed",
+    "publish.completed",
+    "engagement.detected"
+  ],
   "dependencies": {
     "required": ["redis", "openai"],
     "replaceable": ["supabase"],
     "optional": ["slack", "linkedin", "facebook"]
   },
-  "env": [
-    "OPENAI_API_KEY",
-    "REDIS_URL",
-    "SUPABASE_URL",
-    "SUPABASE_SERVICE_KEY",
-    "NAVER_CLIENT_ID",
-    "NAVER_CLIENT_SECRET",
-    "SLACK_BOT_TOKEN",
-    "SLACK_CHANNEL_ID",
-    "LINKEDIN_CLIENT_ID",
-    "LINKEDIN_CLIENT_SECRET"
+  "excluded": [
+    "internal_user_operations",
+    "dau_retention",
+    "task_management",
+    "erp_bpm",
+    "generic_workflow",
+    "organization_runtime"
   ]
 }
