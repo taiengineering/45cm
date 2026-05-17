@@ -10,10 +10,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="layout">
           <nav className="sidebar">
             <div className="sidebar-logo">45cm</div>
-            <span className="sidebar-badge">Operations Console</span>
+            <span className="sidebar-badge">Marketing Engine</span>
             {[
               { href:'/dashboard', icon:'📊', label:'Dashboard' },
               { href:'/drafts', icon:'📝', label:'Drafts' },
+              { href:'/calendar', icon:'📅', label:'Calendar' },
               { href:'/workflows', icon:'🔄', label:'Workflows' },
               { href:'/queues', icon:'⚡', label:'Queues' },
               { href:'/analytics', icon:'📈', label:'Analytics' },
@@ -29,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <a href="/login" className="nav-item" style={{ borderTop: '1px solid var(--border)', paddingTop: 12, marginTop: 8 }}>
               <span className="nav-icon">🔑</span>Login
             </a>
-            <div style={{ fontSize: 11, color: 'var(--muted)', padding: '8px 14px' }}>api.45cm.com · v0.6.0</div>
+            <div style={{ fontSize: 11, color: 'var(--muted)', padding: '8px 14px' }}>v0.7.0 · Marketing Engine</div>
           </nav>
           <main className="main">{children}</main>
         </div>
