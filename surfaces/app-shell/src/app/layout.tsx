@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               { href:'/calendar', icon:'📅', label:'Calendar' },
               { href:'/brand', icon:'🎨', label:'Brand Studio' },
               { href:'/visual', icon:'🖼️', label:'Visual Studio' },
+              { href:'/channels', icon:'📡', label:'Channel Health' },
               { href:'/leads', icon:'📌', label:'Leads' },
               { href:'/engagement', icon:'💬', label:'Engagement' },
               { href:'/analytics', icon:'📈', label:'Analytics' },
