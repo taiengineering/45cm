@@ -1,15 +1,15 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 const API = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.45cm.com"
 const BADGE:Record<string,string> = {draft:'badge-draft',humanized:'badge-humanized',pending_approval:'badge-pending',approved:'badge-approved',rejected:'badge-rejected',failed:'badge-failed',published:'badge-approved'}
 
-export default function DraftDetailPage() {
+function DraftDetail() {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
   const [d, setD] = useState<any>(null)
   const [loading, setLoading] = useState(true)
-  useEffect(() => { if(!id) {setLoading(false);return;} fetch(API+"/drafts/"+id).then(r=>r.json()).then(data=>{setD(data);setLoading(false)}).catch(()=>setLoading(false)) }, [id])
+  useEffect(() => { if(!id){setLoading(false);return;} fetch(API+"/drafts/"+id).then(r=>r.json()).then(data=>{setD(data);setLoading(false)}).catch(()=>setLoading(false)) }, [id])
 
   if (loading) return <div style={{padding:24}}><div className="skeleton" /></div>
   if (!d) return <div style={{padding:24}} className="card empty">Draft not found. <a href="/drafts" style={{color:'var(--accent)'}}>Back to Drafts</a></div>
@@ -84,4 +84,8 @@ export default function DraftDetailPage() {
       </div>
     </div>
   )
+}
+
+export default function DraftDetailPage() {
+  return <Suspense fallback={<div style={{padding:24}}><div className="skeleton" /></div>}><DraftDetail /></Suspense>
 }
