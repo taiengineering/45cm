@@ -1,7 +1,20 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
-export const metadata: Metadata = { title: '45cm Marketing Engine', description: 'AI Marketing Operations Engine' }
+const ICON_BASE = 'https://vwlahtguyggrhvslabax.supabase.co/storage/v1/object/public/site-assets'
+
+export const metadata: Metadata = {
+  title: '45cm Marketing Engine',
+  description: 'AI Marketing Operations Engine',
+  icons: {
+    icon: [
+      { url: `${ICON_BASE}/tai-icon-48.png`, sizes: '48x48', type: 'image/png' },
+      { url: `${ICON_BASE}/tai-icon-96.png`, sizes: '96x96', type: 'image/png' },
+      { url: `${ICON_BASE}/tai-icon-192.png`, sizes: '192x192', type: 'image/png' },
+    ],
+    apple: { url: `${ICON_BASE}/tai-icon-192.png`, sizes: '192x192' },
+  },
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
