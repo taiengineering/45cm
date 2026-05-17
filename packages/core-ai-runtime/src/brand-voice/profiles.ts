@@ -1,0 +1,6 @@
+import type { BrandVoiceProfile } from '../humanize/rules';
+export const TAI_VOICE: BrandVoiceProfile = { id:'tai', name:'TAI Engineering', tone:'전문적이고 신뢰감 있는 실무 톤', style:'안전관리 실무자가 동료에게 설명하는 느낌', avoid:['과장된 마케팅 표현','감정 호소','근거 없는 단정'], preferredPhrases:['실무적으로 보면','현장에서는','법령 기준으로'], forbiddenPatterns:['결론적으로','요약하면','아래와 같습니다'], industryContext:'산업안전보건, 중대재해처벌법, 안전관리자 선임' };
+export const NEUTRAL_VOICE: BrandVoiceProfile = { id:'neutral', name:'Neutral', tone:'중립적 정보 전달', style:'블로그 글 느낌', avoid:['과장'], preferredPhrases:[], forbiddenPatterns:['결론적으로'], industryContext:'일반' };
+export const PROFESSIONAL_VOICE: BrandVoiceProfile = { id:'professional', name:'Professional', tone:'격식체 보고서 느낌', style:'비즈니스 문서 톤', avoid:['구어체','이모지'], preferredPhrases:['검토 결과','분석에 따르면'], forbiddenPatterns:['ㅋㅋ','!!'], industryContext:'비즈니스' };
+const P: Record<string,BrandVoiceProfile> = { tai:TAI_VOICE, neutral:NEUTRAL_VOICE, professional:PROFESSIONAL_VOICE };
+export function getBrandVoice(id:string): BrandVoiceProfile { return P[id]??TAI_VOICE; }
