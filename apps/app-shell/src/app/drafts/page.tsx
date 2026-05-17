@@ -19,7 +19,7 @@ export default function DraftsPage() {
       {loading && !drafts.length ? <div><div className="skeleton" /><div className="skeleton" style={{marginTop:10}} /></div> : null}
       {!loading && !drafts.length && <div className="card empty">No drafts yet</div>}
       {drafts.map((d:any) => (
-        <a key={d.id} href={`/drafts/${d.id}`} className="draft-card" style={{display:'block',textDecoration:'none',color:'inherit'}}>
+        <a key={d.id} href={`/drafts/detail/?id=${d.id}`} className="draft-card" style={{display:'block',textDecoration:'none',color:'inherit'}}>
           <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10}}>
             <span className={`badge ${BADGE[d.status]||'badge-draft'}`}>{d.status}</span>
             <span style={{fontSize:11,color:'var(--muted)',fontFamily:'var(--mono)'}}>{d.id?.slice(0,8)} →</span>
