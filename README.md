@@ -1,82 +1,57 @@
-# 45cm
+# 45cm Marketing Engine
 
-**Operational Runtime Platform**
+> AI Marketing Operations Engine — Reach, Engage, Convert
 
-45cm는 서비스 모음이 아니라, Operational Runtime Platform이다.
+## 개요
 
-## 아키텍처 원칙
+45cm은 사람 중심의 마케팅 운영 엔진입니다.
+AI가 운영을 증폭하고, 운영자가 전략을 판단합니다.
 
-```
-Repo는 하나
-Runtime은 분리
-Domain은 Pack화
-Surface는 Subdomain화
-```
-
-## 구조
+## 아키텍처
 
 ```
-45cm/
-├─ apps/                    # Surface Layer
-│   ├─ marketing-api/       # api.45cm.com (Runtime API)
-│   ├─ marketing-worker/    # BullMQ Worker
-│   ├─ marketing-web/       # marketing.45cm.com (Ops Console)
-│   ├─ app-shell/           # app.45cm.com (SaaS Shell)
-│   ├─ admin-web/           # admin.45cm.com (Platform Admin)
-│   ├─ scheduler/           # Cron / Periodic Jobs
-│   └─ marketing-ai-worker/ # AI Queue Worker
-├─ packages/                # Runtime Layer
-│   ├─ core-ai-runtime/     # OpenAI Gateway + Humanize + Brand Voice
-│   ├─ core-queue-runtime/  # BullMQ + Redis
-│   ├─ core-event-runtime/  # Event Envelope
-│   ├─ core-db-runtime/     # Supabase CRUD
-│   ├─ core-policy-runtime/ # Approval Policy
-│   ├─ core-shared-types/   # Platform Types
-│   └─ channel-naver-kin/   # Naver API Adapter
-├─ domain-packs/            # Domain Layer
-│   ├─ tai/                 # TAI Engineering (Brand, CTA, Keywords)
-│   └─ default/             # Default Pack
-├─ docs/                    # Documentation
-├─ infra/                   # Infrastructure Config
-└─ scripts/                 # Bootstrap / Migration / Seed
-```
-
-## Runtime 흐름
-
-```
-Keyword → Collect → AI Draft → Humanize → Approval → Publish → CTA Track
+engines/marketing-engine/    ← 엔진 코어
+platform/                    ← auth, billing, workspace
+surfaces/app-shell/          ← Operations Console (Next.js)
+docs/                        ← 엔진 경계 + 운영 정책
+infra/                       ← Dockerfile, 설정
 ```
 
 ## 인프라
 
-| 서비스 | 플랫폼 | 도메인 |
-|--------|--------|--------|
-| Marketing API + Worker | Railway | api.45cm.com |
-| Redis | Railway (내부) | redis.railway.internal |
-| Database | Supabase | vwlahtguyggrhvslabax.supabase.co |
-| Landing | Cloudflare Pages | 45cm.com |
-| Ops Console | Cloudflare Pages | marketing.45cm.com |
-| TAI API (기존) | Railway | api.taieng.co.kr |
+| 도메인 | 역할 |
+|--------|------|
+| api.45cm.com | Marketing API v0.7.0 (Railway) |
+| app.45cm.com | Operations Console (Cloudflare Pages) |
+| Supabase | Database (30+ tables) |
+| Redis | Queue Runtime (BullMQ) |
 
-## API Endpoints
+## 엔진 책임 범위
 
-| Method | Path | 설명 |
-|--------|------|------|
-| GET | /health | 서비스 상태 |
-| GET | /debug/openai | OpenAI 연결 진단 |
-| GET | /debug/redis | Redis 연결 진단 |
-| GET | /drafts | Draft 목록 |
-| GET | /ops/queues | Queue 상태 |
-| GET | /analytics/summary | 통계 요약 |
-| POST | /collect | 키워드 수집 |
-| POST | /draft/generate | AI 드래프트 생성 |
-| POST | /approval/request | Slack 승인 요청 |
-| GET | /c/:ctaId | CTA 추적 + 리다이렉트 |
+```
+Marketing Engine: Reach → Engage → Convert
+관재엔진: Operate → Manage → Retain
+경계선: CTA
+```
 
-## 로컬 실행
+## 빠른 시작
 
 ```bash
-pnpm install
-pnpm dev:marketing  # API + Worker
-pnpm dev:web        # Ops Console
+# API 상태 확인
+curl https://api.45cm.com/health
+
+# 콘솔 접속
+https://app.45cm.com/dashboard
 ```
+
+## 문서
+
+- [Engine Boundary](docs/engines/marketing-engine/ENGINE_BOUNDARY.md)
+- [CTA Boundary](docs/engines/marketing-engine/CTA_BOUNDARY.md)
+- [Scope](docs/engines/marketing-engine/SCOPE.md)
+- [Events](docs/engines/marketing-engine/EVENTS.md)
+- [Campaign Policy](docs/operations/campaign-policy.md)
+- [Daily Workflow](docs/operations/daily-workflow.md)
+- [Launch Checklist](docs/operations/launch-checklist.md)
+- [Work Log](docs/work-log-full-session.md)
+- [Issue Log](docs/issues/issue-log.md)
