@@ -20,15 +20,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               { href: '/queues', icon: '⚡', label: 'Queues' },
               { href: '/analytics', icon: '📈', label: 'Analytics' },
               { href: '/system', icon: '⚙️', label: 'System' },
+              { href: '/settings', icon: '🔧', label: 'Settings' },
             ].map(item => (
               <a key={item.href} href={item.href} className="nav-item">
                 <span className="nav-icon">{item.icon}</span>{item.label}
               </a>
             ))}
             <div style={{ flex: 1 }} />
-            <div style={{ fontSize: 11, color: 'var(--muted)', padding: '12px 14px', borderTop: '1px solid var(--border)' }}>
-              api.45cm.com
-            </div>
+            <a href="/login" className="nav-item" style={{ borderTop: '1px solid var(--border)', paddingTop: 12, marginTop: 8 }}>
+              <span className="nav-icon">🔑</span>Login
+            </a>
+            <div style={{ fontSize: 11, color: 'var(--muted)', padding: '8px 14px' }}>api.45cm.com · v0.3.0</div>
           </nav>
           <main className="main">{children}</main>
         </div>

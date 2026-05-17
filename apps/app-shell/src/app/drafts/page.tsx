@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
 const API = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.45cm.com"
-const BADGE:Record<string,string> = {draft:'badge-draft',humanized:'badge-humanized',pending_approval:'badge-pending',approved:'badge-approved',rejected:'badge-rejected',failed:'badge-failed',timeout:'badge-timeout'}
+const BADGE:Record<string,string> = {draft:'badge-draft',humanized:'badge-humanized',pending_approval:'badge-pending',approved:'badge-approved',rejected:'badge-rejected',failed:'badge-failed',timeout:'badge-timeout',published:'badge-approved'}
 
 export default function DraftsPage() {
   const [drafts, setDrafts] = useState<any[]>([])
@@ -19,10 +19,10 @@ export default function DraftsPage() {
       {loading && !drafts.length ? <div><div className="skeleton" /><div className="skeleton" style={{marginTop:10}} /></div> : null}
       {!loading && !drafts.length && <div className="card empty">No drafts yet</div>}
       {drafts.map((d:any) => (
-        <div key={d.id} className="draft-card">
+        <a key={d.id} href={`/drafts/${d.id}`} className="draft-card" style={{display:'block',textDecoration:'none',color:'inherit'}}>
           <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10}}>
             <span className={`badge ${BADGE[d.status]||'badge-draft'}`}>{d.status}</span>
-            <span style={{fontSize:11,color:'var(--muted)',fontFamily:'var(--mono)'}}>{d.id?.slice(0,8)}</span>
+            <span style={{fontSize:11,color:'var(--muted)',fontFamily:'var(--mono)'}}>{d.id?.slice(0,8)} →</span>
           </div>
           {d.humanized_body && (
             <div style={{marginBottom:10}}>
@@ -39,7 +39,7 @@ export default function DraftsPage() {
             <span>trace: {d.metadata?.trace_id?.slice(0,8) ?? '—'}</span>
             <span>{new Date(d.created_at).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})}</span>
           </div>
-        </div>
+        </a>
       ))}
     </div>
   )
