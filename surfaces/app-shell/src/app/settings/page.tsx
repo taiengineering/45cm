@@ -1,111 +1,102 @@
 "use client"
-import { useState, useEffect, Suspense } from "react"
-import { useSearchParams } from "next/navigation"
+import { useState, useEffect } from "react"
 const API = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.45cm.com"
 
-function SettingsContent() {
-  const searchParams = useSearchParams()
-  const linkedinStatus = searchParams.get('linkedin')
-  const [s, setS] = useState<any>(null)
+type Cap = 'publish_post'|'publish_image'|'publish_video'|'publish_comment'|'analytics'|'messaging'
+const CAP_LABEL: Record<Cap,string> = {publish_post:'Post',publish_image:'Image',publish_video:'Video',publish_comment:'Comment',analytics:'Analytics',messaging:'Message'}
+
+interface Channel { provider:string; name:string; icon:string; capabilities:Cap[]; status:'connected'|'available'|'coming_soon'; statusColor:string }
+
+const CHANNELS: Channel[] = [
+  {provider:'linkedin',name:'LinkedIn',icon:'🔗',capabilities:['publish_post','publish_image','publish_comment','analytics'],status:'available',statusColor:'var(--accent)'},
+  {provider:'facebook',name:'Facebook',icon:'📘',capabilities:['publish_post','publish_image','publish_comment','analytics'],status:'available',statusColor:'var(--accent)'},
+  {provider:'naver_blog',name:'Naver Blog',icon:'🟢',capabilities:['publish_post','publish_image'],status:'available',statusColor:'var(--accent)'},
+  {provider:'instagram',name:'Instagram',icon:'📸',capabilities:['publish_image','publish_video','analytics'],status:'coming_soon',statusColor:'var(--muted)'},
+  {provider:'youtube',name:'YouTube',icon:'🎥',capabilities:['publish_video','analytics'],status:'coming_soon',statusColor:'var(--muted)'},
+  {provider:'x_twitter',name:'X (Twitter)',icon:'𝕏',capabilities:['publish_post','publish_image','analytics'],status:'coming_soon',statusColor:'var(--muted)'},
+  {provider:'threads',name:'Threads',icon:'🧵',capabilities:['publish_post','publish_image'],status:'coming_soon',statusColor:'var(--muted)'},
+]
+
+export default function SettingsPage() {
   const [integrations, setIntegrations] = useState<any[]>([])
-  const [plan, setPlan] = useState<any>(null)
-  const [saving, setSaving] = useState(false)
+  const [ws, setWs] = useState<any>(null)
 
   useEffect(() => {
-    fetch(API+"/workspace/settings").then(r=>r.json()).then(setS).catch(()=>{})
-    fetch(API+"/workspace/integrations").then(r=>r.json()).then(setIntegrations).catch(()=>{})
-    fetch(API+"/workspace/plan").then(r=>r.json()).then(setPlan).catch(()=>{})
+    fetch(API+'/workspace/integrations').then(r=>r.json()).then(d=>Array.isArray(d)?setIntegrations(d):null).catch(()=>{})
+    fetch(API+'/workspace/settings').then(r=>r.json()).then(setWs).catch(()=>{})
   }, [])
 
-  const save = async () => { setSaving(true); await fetch(API+"/workspace/settings",{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(s)}); setSaving(false) }
-
-  const connectLinkedIn = async () => {
-    const res = await fetch(API+"/oauth/linkedin/start").then(r=>r.json())
-    if (res.url) window.location.href = res.url
-    else alert(res.error || 'LinkedIn not configured')
+  const getStatus = (provider: string) => {
+    const i = integrations.find((x:any)=>x.provider===provider)
+    if (i) return i.status === 'connected' ? 'connected' : i.status
+    return null
   }
-
-  const linkedin = integrations.find((i:any) => i.provider === 'linkedin')
-
-  if (!s) return <div style={{padding:24}}><div className="skeleton" /></div>
 
   return (
     <div>
       <h1 className="page-title">Settings</h1>
-      <p className="page-sub">Workspace configuration</p>
+      <p className="page-sub">운영 설정 및 채널 연동</p>
 
-      {linkedinStatus === 'connected' && (
-        <div className="card" style={{marginBottom:16,borderColor:'var(--green)',background:'var(--green-soft)'}}>
-          <span style={{color:'var(--green)',fontWeight:600}}>✅ LinkedIn connected successfully!</span>
-        </div>
-      )}
-
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
-        <div className="card">
-          <div className="card-header"><span className="card-title">General</span></div>
-          <div style={{marginBottom:16}}>
-            <label style={{fontSize:13,color:'var(--muted)',display:'block',marginBottom:6}}>Brand Voice</label>
-            <select value={s.brand_voice||'tai'} onChange={e=>setS({...s,brand_voice:e.target.value})}
-              style={{width:'100%',padding:'8px 12px',borderRadius:7,border:'1px solid var(--border)',background:'var(--surface)',color:'var(--fg)',fontSize:14}}>
-              <option value="tai">TAI Engineering</option>
-              <option value="neutral">Neutral</option>
-              <option value="professional">Professional</option>
-            </select>
-          </div>
-          <div style={{marginBottom:16}}>
-            <label style={{fontSize:13,color:'var(--muted)',display:'block',marginBottom:6}}>Default CTA</label>
-            <input value={s.default_cta||''} onChange={e=>setS({...s,default_cta:e.target.value})}
-              style={{width:'100%',padding:'8px 12px',borderRadius:7,border:'1px solid var(--border)',background:'var(--surface)',color:'var(--fg)',fontSize:14,boxSizing:'border-box'}} />
-          </div>
-          <div style={{marginBottom:16,display:'flex',gap:16}}>
-            <label style={{fontSize:13,color:'var(--muted)',display:'flex',alignItems:'center',gap:6}}>
-              <input type="checkbox" checked={s.approval_required??true} onChange={e=>setS({...s,approval_required:e.target.checked})} /> Approval Required
-            </label>
-          </div>
-          <button className="btn" onClick={save} style={{background:'var(--accent)',color:'#fff',border:'none'}}>
-            {saving ? 'Saving...' : 'Save Settings'}
-          </button>
-        </div>
-
-        <div>
-          <div className="card" style={{marginBottom:16}}>
-            <div className="card-header"><span className="card-title">LinkedIn Integration</span></div>
-            {linkedin ? (
-              <div>
-                <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:8}}>
-                  <span className={`dot ${linkedin.status==='connected'?'dot-ok':'dot-err'}`}></span>
-                  <span style={{fontSize:14,fontWeight:600}}>{linkedin.status === 'connected' ? 'Connected' : linkedin.status}</span>
+      {/* Channel Integrations */}
+      <div className="card-title" style={{marginBottom:12}}>채널 연동</div>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:12,marginBottom:24}}>
+        {CHANNELS.map(ch => {
+          const st = getStatus(ch.provider)
+          const isConnected = st === 'connected'
+          return (
+            <div key={ch.provider} className="card" style={isConnected?{borderColor:'var(--green)'}:{}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:10}}>
+                <div style={{display:'flex',alignItems:'center',gap:10}}>
+                  <span style={{fontSize:28}}>{ch.icon}</span>
+                  <div>
+                    <div style={{fontSize:14,fontWeight:700}}>{ch.name}</div>
+                    <span style={{fontSize:10,padding:'1px 6px',borderRadius:3,background:isConnected?'var(--green-soft)':ch.status==='coming_soon'?'var(--surface)':'var(--surface)',color:isConnected?'var(--green)':ch.statusColor}}>
+                      {isConnected?'✓ Connected':ch.status==='coming_soon'?'Coming Soon':'Available'}
+                    </span>
+                  </div>
                 </div>
-                {linkedin.expires_at && <div style={{fontSize:12,color:'var(--muted)'}}>Expires: {new Date(linkedin.expires_at).toLocaleDateString('ko-KR')}</div>}
+                {ch.status!=='coming_soon' && (
+                  <button className="btn" onClick={()=>window.open(API+'/oauth/'+ch.provider+'/start','_blank')} style={isConnected?{fontSize:11,color:'var(--muted)'}:{fontSize:11,background:'var(--accent)',color:'#fff',border:'none'}}>
+                    {isConnected?'Reconnect':'Connect'}
+                  </button>
+                )}
               </div>
-            ) : (
-              <div>
-                <p style={{fontSize:13,color:'var(--muted)',marginBottom:12}}>Connect LinkedIn to publish drafts directly.</p>
-                <button className="btn" onClick={connectLinkedIn} style={{background:'#0a66c2',color:'#fff',border:'none'}}>
-                  🔗 Connect LinkedIn
-                </button>
-              </div>
-            )}
-          </div>
-
-          {plan && (
-            <div className="card">
-              <div className="card-header"><span className="card-title">Plan & Usage</span></div>
-              <div style={{fontSize:13,lineHeight:2,color:'var(--muted)'}}>
-                <div>Plan: <span style={{color:'var(--fg)',fontWeight:600}}>{plan.plan?.plan || 'free'}</span></div>
-                <div>AI Cost Limit: ${plan.plan?.max_ai_cost_per_month}/month</div>
-                <div>Current AI Cost: ${(plan.usage?.ai_cost_usd || 0).toFixed(4)}</div>
-                <div>Drafts this month: {plan.usage?.draft_count || 0}</div>
-                <div>Publishes this month: {plan.usage?.publish_count || 0}</div>
+              {/* Capabilities */}
+              <div style={{display:'flex',gap:4,flexWrap:'wrap'}}>
+                {ch.capabilities.map(cap => (
+                  <span key={cap} style={{fontSize:10,padding:'2px 6px',borderRadius:3,background:'var(--surface)',color:'var(--fg)'}}>
+                    {ch.status==='coming_soon'?'–':'✓'} {CAP_LABEL[cap]}
+                  </span>
+                ))}
               </div>
             </div>
-          )}
-        </div>
+          )
+        })}
+      </div>
+
+      {/* Workspace Settings */}
+      <div className="card-title" style={{marginBottom:12}}>운영 설정</div>
+      <div className="card">
+        {ws && (
+          <div style={{fontSize:13,lineHeight:2.2,color:'var(--muted)'}}>
+            <div>Workspace: <span style={{color:'var(--fg)',fontWeight:600}}>{ws.workspace_id?.slice(0,8)}</span></div>
+            <div>Approval Required: <span style={{color:ws.approval_required?'var(--green)':'var(--muted)',fontWeight:600}}>{ws.approval_required?'Yes':'No'}</span></div>
+            <div>Publish Mode: <span style={{color:'var(--accent)',fontWeight:600}}>mock</span></div>
+            <div>Default Channel: <span style={{fontWeight:600}}>LinkedIn</span></div>
+          </div>
+        )}
+        {!ws && <div className="empty">설정을 불러오는 중...</div>}
+      </div>
+
+      {/* Integration Health */}
+      <div className="card" style={{marginTop:16}}>
+        <div className="card-title" style={{marginBottom:8}}>핵심 원칙</div>
+        <p style={{fontSize:12,color:'var(--muted)',lineHeight:1.8}}>
+          새 채널 추가 = Adapter 구현 + Registry 등록.<br/>
+          모든 채널은 동일한 인터페이스를 사용합니다.<br/>
+          connect → validate → publish → health
+        </p>
       </div>
     </div>
   )
-}
-
-export default function SettingsPage() {
-  return <Suspense fallback={<div style={{padding:24}}><div className="skeleton" /></div>}><SettingsContent /></Suspense>
 }
