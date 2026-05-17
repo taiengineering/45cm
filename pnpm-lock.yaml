@@ -367,6 +367,9 @@ importers:
       '@45cm/core-db-runtime':
         specifier: workspace:*
         version: link:../../packages/core-db-runtime
+      '@45cm/core-publish-runtime':
+        specifier: workspace:*
+        version: link:../../packages/core-publish-runtime
       '@45cm/core-queue-runtime':
         specifier: workspace:*
         version: link:../../packages/core-queue-runtime
@@ -435,6 +438,22 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  packages/core-auth-runtime:
+    dependencies:
+      '@45cm/core-shared-types':
+        specifier: workspace:*
+        version: link:../core-shared-types
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.105.4
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   packages/core-db-runtime:
     dependencies:
       '@45cm/core-shared-types':
@@ -476,6 +495,19 @@ importers:
         specifier: workspace:*
         version: link:../core-shared-types
     devDependencies:
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  packages/core-publish-runtime:
+    dependencies:
+      '@45cm/core-shared-types':
+        specifier: workspace:*
+        version: link:../core-shared-types
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
       typescript:
         specifier: ^5.4.0
         version: 5.9.3
