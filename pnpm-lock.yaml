@@ -130,6 +130,19 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  engines/marketing-engine/runtime/channel-health:
+    dependencies:
+      '@45cm/core-shared-types':
+        specifier: workspace:*
+        version: link:../../../../platform/shared-types
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   engines/marketing-engine/runtime/classification:
     dependencies:
       '@45cm/core-ai-runtime':
@@ -240,6 +253,19 @@ importers:
         version: 5.9.3
 
   engines/marketing-engine/runtime/rule:
+    dependencies:
+      '@45cm/core-shared-types':
+        specifier: workspace:*
+        version: link:../../../../platform/shared-types
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  engines/marketing-engine/runtime/visual:
     dependencies:
       '@45cm/core-shared-types':
         specifier: workspace:*
