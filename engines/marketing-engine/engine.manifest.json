@@ -1,8 +1,8 @@
 {
   "name": "marketing-engine",
   "version": "1.0.0",
-  "description": "AI Marketing Operations Engine — Reach, Engage, Convert",
-  "boundary": "CTA 이전까지 책임. CTA 이후는 관재엔진 책임.",
+  "description": "AI Marketing Operations Engine \u2014 Reach, Engage, Convert",
+  "boundary": "CTA \uc774\uc804\uae4c\uc9c0 \ucc45\uc784. CTA \uc774\ud6c4\ub294 \uad00\uc7ac\uc5d4\uc9c4 \ucc45\uc784.",
   "capabilities": [
     "collect",
     "classify",
@@ -15,9 +15,19 @@
     "analytics",
     "lead_generation",
     "brand_voice",
-    "channel_operations"
+    "channel_operations",
+    "channel_integration"
   ],
-  "channels": ["naver_kin", "linkedin", "facebook", "naver_blog"],
+  "channels": [
+    { "provider": "linkedin", "status": "active", "capabilities": ["publish_post","publish_image","publish_comment","analytics"] },
+    { "provider": "facebook", "status": "placeholder", "capabilities": ["publish_post","publish_image","publish_comment","analytics"] },
+    { "provider": "naver_blog", "status": "placeholder", "capabilities": ["publish_post","publish_image"] },
+    { "provider": "naver_kin", "status": "active", "capabilities": ["collect"] },
+    { "provider": "instagram", "status": "planned", "capabilities": ["publish_image","publish_video","analytics"] },
+    { "provider": "youtube", "status": "planned", "capabilities": ["publish_video","analytics"] },
+    { "provider": "x_twitter", "status": "planned", "capabilities": ["publish_post","publish_image","analytics"] },
+    { "provider": "threads", "status": "planned", "capabilities": ["publish_post","publish_image"] }
+  ],
   "events_output": [
     "lead.generated",
     "cta.clicked",
@@ -25,6 +35,16 @@
     "publish.completed",
     "engagement.detected"
   ],
+  "integration_architecture": {
+    "pattern": "adapter",
+    "registry": "channelRegistry",
+    "new_channel_steps": [
+      "1. Create adapter implementing ChannelIntegrationAdapter",
+      "2. Register in channelRegistry",
+      "3. Add provider config in routes-channels.ts",
+      "4. UI auto-extends via /integrations/providers"
+    ]
+  },
   "dependencies": {
     "required": ["redis", "openai"],
     "replaceable": ["supabase"],
