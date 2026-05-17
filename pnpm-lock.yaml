@@ -342,6 +342,9 @@ importers:
       '@45cm/core-shared-types':
         specifier: workspace:*
         version: link:../../packages/core-shared-types
+      '@45cm/core-workflow-runtime':
+        specifier: workspace:*
+        version: link:../../packages/core-workflow-runtime
       '@45cm/core-workspace-runtime':
         specifier: workspace:*
         version: link:../../packages/core-workspace-runtime
@@ -498,6 +501,22 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  packages/core-classification-runtime:
+    dependencies:
+      '@45cm/core-ai-runtime':
+        specifier: workspace:*
+        version: link:../core-ai-runtime
+      '@45cm/core-shared-types':
+        specifier: workspace:*
+        version: link:../core-shared-types
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   packages/core-db-runtime:
     dependencies:
       '@45cm/core-shared-types':
@@ -529,6 +548,22 @@ importers:
       '@types/uuid':
         specifier: ^9.0.0
         version: 9.0.8
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  packages/core-notification-runtime:
+    dependencies:
+      '@45cm/core-shared-types':
+        specifier: workspace:*
+        version: link:../core-shared-types
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.105.4
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
       typescript:
         specifier: ^5.4.0
         version: 5.9.3
@@ -575,8 +610,43 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  packages/core-rule-runtime:
+    dependencies:
+      '@45cm/core-shared-types':
+        specifier: workspace:*
+        version: link:../core-shared-types
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   packages/core-shared-types:
     devDependencies:
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  packages/core-workflow-runtime:
+    dependencies:
+      '@45cm/core-shared-types':
+        specifier: workspace:*
+        version: link:../core-shared-types
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.105.4
+      uuid:
+        specifier: ^9.0.0
+        version: 9.0.1
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      '@types/uuid':
+        specifier: ^9.0.0
+        version: 9.0.8
       typescript:
         specifier: ^5.4.0
         version: 5.9.3
