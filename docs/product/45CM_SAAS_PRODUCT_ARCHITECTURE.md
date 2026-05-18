@@ -21,7 +21,39 @@
 
 ---
 
-# 2. Core Product Philosophy
+# 2. Why 45cm Exists
+
+현실의 많은 기업들은:
+
+- 채널은 많지만 관리되지 않는다
+- 콘텐츠는 있지만 일관성이 없다
+- 운영은 즉흥적으로 이루어진다
+- 사람은 지쳐간다
+- 브랜드는 서서히 약해진다
+
+문제는:
+
+```text
+마케팅 부족
+```
+
+보다,
+
+```text
+운영 붕괴
+```
+
+에 가깝다.
+
+45cm는:
+
+# “브랜드 운영이 무너지지 않게 만드는 시스템”
+
+을 목표로 한다.
+
+---
+
+# 3. Core Product Philosophy
 
 45cm의 핵심은:
 
@@ -60,7 +92,7 @@
 
 ---
 
-# 3. Product Positioning
+# 4. Product Positioning
 
 45cm는:
 
@@ -84,7 +116,7 @@
 
 ---
 
-# 4. Core Operating Principles
+# 5. Core Operating Principles
 
 | 원칙 | 의미 |
 |---|---|
@@ -98,10 +130,12 @@
 | Consumer Respect | 소비자가 싫어하지 않는 상태 |
 | Operator-first | 운영자 burnout 감소 |
 | Guidance over Automation | 자동화보다 운영 보조 |
+| Calm UX | 압박 없는 UX |
+| Healthy Silence | 안정 상태에서는 조용함 |
 
 ---
 
-# 5. Workspace Architecture
+# 6. Workspace Architecture
 
 ## 기본 구조
 
@@ -137,7 +171,7 @@ Agency Account
 
 ---
 
-# 6. Core Product Areas
+# 7. Core Product Areas
 
 | 영역 | 역할 |
 |---|---|
@@ -147,11 +181,12 @@ Agency Account
 | Channels | 채널 건강 상태 |
 | Content | Draft/Visual/Brand 운영 |
 | Intelligence | 조용한 추천 및 분석 |
+| Studio | Operational Marketing Modes |
 | Settings | 연결/정책/권한 |
 
 ---
 
-# 7. Home Philosophy
+# 8. Home Philosophy
 
 Home은:
 
@@ -176,7 +211,7 @@ Analytics Dashboard
 
 ---
 
-# 8. Home Structure
+# 9. Home Structure
 
 ## Global Health Strip
 
@@ -213,7 +248,7 @@ Naver Blog — Fatigue rising
 
 ---
 
-# 9. Content Operating System (COS)
+# 10. Content Operating System (COS)
 
 45cm는 콘텐츠를:
 
@@ -229,7 +264,7 @@ Naver Blog — Fatigue rising
 
 ---
 
-# 10. Operational Streams
+# 11. Operational Streams
 
 | Stream | 역할 |
 |---|---|
@@ -246,7 +281,7 @@ Naver Blog — Fatigue rising
 
 ---
 
-# 11. Content Mix Philosophy
+# 12. Content Mix Philosophy
 
 좋은 브랜드는:
 
@@ -274,7 +309,7 @@ Naver Blog — Fatigue rising
 
 ---
 
-# 12. Content Health
+# 13. Content Health
 
 45cm는 단순 engagement가 아니라:
 
@@ -295,7 +330,7 @@ Naver Blog — Fatigue rising
 
 ---
 
-# 13. Channel Health Philosophy
+# 14. Channel Health Philosophy
 
 45cm는 analytics보다:
 
@@ -316,7 +351,67 @@ Naver Blog — Fatigue rising
 
 ---
 
-# 14. Calm Behavioral Design
+# 15. Operational Marketing Studio
+
+45cm Studio는:
+
+```text
+AI Persona
+```
+
+시스템이 아니라,
+
+# Operational Marketing Modes
+
+시스템이다.
+
+---
+
+# 16. Marketing Operator Profiles
+
+| Operator | 특징 |
+|---|---|
+| Calm Brand Operator | 안정적 cadence |
+| Trust Builder | 신뢰 중심 |
+| Technical Advisor | 전문성 중심 |
+| Industrial Operator | 제조/운영 중심 |
+| Campaign Driver | 캠페인/전환 중심 |
+| Executive Voice | 대표 메시지 |
+| Community Operator | 관계 중심 |
+| Recovery Operator | fatigue 회복 |
+| Soft CTA Operator | 자연스러운 전환 |
+| Authority Builder | 전문 브랜드 |
+
+---
+
+# 17. Operator Philosophy
+
+Operator는:
+
+```text
+글쓰기 스타일
+```
+
+이 아니라,
+
+# “운영 관점”
+
+이다.
+
+선택된 Operator에 따라:
+
+- cadence
+- CTA level
+- recommendation
+- visual tone
+- approval sensitivity
+- stream balance
+
+가 달라진다.
+
+---
+
+# 18. Calm Behavioral Design
 
 45cm는:
 
@@ -337,7 +432,7 @@ Naver Blog — Fatigue rising
 
 ---
 
-# 15. Recommendation Tone
+# 19. Recommendation Tone
 
 금지:
 
@@ -362,7 +457,7 @@ CTR을 위해 CTA를 늘리세요!
 
 ---
 
-# 16. Healthy Silence
+# 20. Healthy Silence
 
 Healthy 상태에서는:
 
@@ -380,7 +475,7 @@ Healthy 상태에서는:
 
 ---
 
-# 17. Cooldown Philosophy
+# 21. Cooldown Philosophy
 
 45cm는:
 
@@ -397,7 +492,7 @@ Healthy 상태에서는:
 
 ---
 
-# 18. Operator-first Design
+# 22. Operator-first Design
 
 45cm는:
 
@@ -418,7 +513,7 @@ Healthy 상태에서는:
 
 ---
 
-# 19. Operational Lifecycle
+# 23. Operational Lifecycle
 
 45cm는:
 
@@ -449,7 +544,33 @@ Healthy 상태에서는:
 
 ---
 
-# 20. Operational KPI Philosophy
+# 24. Operational UX Scenarios
+
+45cm는:
+
+```text
+기능 중심 SaaS
+```
+
+가 아니라,
+
+# 현실 운영 흐름 중심 시스템
+
+이다.
+
+핵심 사용자:
+
+| 사용자 | 특징 |
+|---|---|
+| 겸직 마케터 | 디자인+운영 병행 |
+| 채널 관리자 | 일정/게시 운영 |
+| 중소기업 대표 | 직접 운영 |
+| 광고대행사 운영자 | 다 Workspace 관리 |
+| 브랜드 담당자 | tone/consistency 중심 |
+
+---
+
+# 25. Operational KPI Philosophy
 
 45cm의 KPI는:
 
@@ -483,7 +604,7 @@ Healthy 상태에서는:
 
 ---
 
-# 21. Anti-patterns
+# 26. Anti-patterns
 
 45cm는 다음을 지양한다:
 
@@ -498,7 +619,7 @@ Healthy 상태에서는:
 
 ---
 
-# 22. Final Product Direction
+# 27. Final Product Direction
 
 45cm는:
 
@@ -520,6 +641,36 @@ AI Marketing Generator
 - 건강한 cadence를 유지하는
 
 운영 시스템을 만든다.
+
+---
+
+# 28. Long-term Vision
+
+45cm는:
+
+```text
+콘텐츠 생성 SaaS
+```
+
+가 아니라,
+
+# Brand Operating System
+
+으로 진화한다.
+
+우리는:
+
+- 브랜드 운영 감각
+- cadence 판단
+- fatigue 감지
+- trust balance
+- operational rhythm
+
+같이 원래 사람의 경험과 감각 영역에 있던 것들을,
+
+# Runtime 수준의 운영 구조
+
+로 현실화한다.
 
 ---
 
