@@ -201,6 +201,19 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  engines/marketing-engine/runtime/emergency-stop:
+    dependencies:
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.105.4
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   engines/marketing-engine/runtime/event:
     dependencies:
       '@45cm/core-shared-types':
@@ -236,6 +249,15 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  engines/marketing-engine/runtime/permissions:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   engines/marketing-engine/runtime/policy:
     dependencies:
       '@45cm/core-shared-types':
@@ -246,11 +268,33 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  engines/marketing-engine/runtime/policy-engine:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   engines/marketing-engine/runtime/publish:
     dependencies:
       '@45cm/core-shared-types':
         specifier: workspace:*
         version: link:../../../../platform/shared-types
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  engines/marketing-engine/runtime/publish-safety:
+    dependencies:
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.105.4
     devDependencies:
       '@types/node':
         specifier: ^20.0.0
@@ -330,6 +374,15 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.45.0
         version: 2.105.4
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  engines/marketing-engine/runtime/tenant-isolation:
     devDependencies:
       '@types/node':
         specifier: ^20.0.0
