@@ -24,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               { href:'/intelligence', icon:'🧠', label:'Intelligence' },
               { href:'/memory', icon:'💾', label:'Strategy Memory' },
               { href:'/simulation', icon:'🧪', label:'Simulation' },
+              { href:'/world', icon:'🌍', label:'World' },
               { href:'/drafts', icon:'📝', label:'Drafts' },
               { href:'/calendar', icon:'📅', label:'Calendar' },
               { href:'/brand', icon:'🎨', label:'Brand Studio' },
