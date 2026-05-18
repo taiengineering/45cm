@@ -1,6 +1,6 @@
 # 45cm Marketing Engine — Issue Log
 
-## 해결된 이슈 (Resolved)
+## 해결된 이슈 (12개)
 
 ### ISS-001: Railway 502 오류
 - **원인**: Python 파일 감지로 Nixpacks가 Python 빌더 사용
@@ -24,7 +24,7 @@
 
 ### ISS-005: CTA subject_id UUID 타입 오류
 - **원인**: CTA ID가 text인데 DB가 UUID 기대
-- **해결**: subject_id 컨럼 text로 변경
+- **해결**: subject_id 컬럼 text로 변경
 - **상태**: ✅ 해결
 
 ### ISS-006: BullMQ enqueue 행
@@ -34,7 +34,7 @@
 
 ### ISS-007: Cloudflare frozen-lockfile 실패
 - **원인**: GitHub API로 새 패키지 push 시 pnpm-lock.yaml 미업데이트
-- **해결**: 빌드 명령어 `pnpm install --no-frozen-lockfile && pnpm build` + 로컬에서 lockfile push
+- **해결**: 빌드 명령어 `pnpm install --no-frozen-lockfile && pnpm build` + 로컬 lockfile push
 - **근본 해결**: Cloudflare 환경변수 `CI=false` 추가 권장
 - **상태**: ✅ 해결 (반복 발생 가능, lockfile push로 대응)
 
@@ -55,13 +55,17 @@
 
 ### ISS-011: workspace_integrations upsert 실패
 - **원인**: unique constraint 없음
-- **해결**: `uq_integration_ws_provider` UNIQUE (workspace_id, provider) 추가
-- **후속**: upsert 대신 select 후 update/insert 분기 방식으로 변경
+- **해결**: `uq_integration_ws_provider` UNIQUE 추가 + select→update/insert 분기
+- **상태**: ✅ 해결
+
+### ISS-012: Railway Healthcheck 실패 (duplicate route)
+- **원인**: `/workspace/integrations` 라우트가 server.ts와 routes-channels.ts 양쪽에 중복 선언
+- **해결**: server.ts에서 제거, routes-channels.ts로 통합
 - **상태**: ✅ 해결
 
 ---
 
-## 대기 중인 이슈 (Pending)
+## 대기 중인 이슈 (7개)
 
 ### ISS-P01: Slack Interactivity URL 미등록
 - **영향**: Slack 버튼 클릭 시 approval 상태 변경 안 됨
@@ -75,6 +79,7 @@
 
 ### ISS-P03: Calendar → Publish Queue 스케줄러
 - **설명**: scheduled_at 시간이 되면 자동으로 publish queue에 추가하는 cron job 필요
+- **Runtime**: scheduler 패키지 구현 완료, cron 연결 필요
 - **우선순위**: P1
 
 ### ISS-P04: Cloudflare CI=false 환경변수
@@ -82,7 +87,7 @@
 - **우선순위**: P2
 
 ### ISS-P05: Console 페이지 실제 데이터 연결
-- **설명**: Intelligence, Channel Health 페이지가 아직 mock 데이터 사용
+- **설명**: Intelligence, Channel Health, Simulation, World 페이지가 mock 데이터 사용
 - **해결**: 실제 운영 데이터 누적 후 API 연결
 - **우선순위**: P2
 
@@ -118,3 +123,16 @@
 | NODE_VERSION | ✅ (20) |
 | NEXT_PUBLIC_API_BASE_URL | ✅ (https://api.45cm.com) |
 | CI | ⚠️ (false 추가 권장) |
+
+---
+
+## Key IDs & Config
+
+- Railway project: `7c3ab53b-feb6-40a4-a4f0-7ade3f6e524b`
+- Railway 45cm-mkt service: `28d42605-e6b8-40fb-9b03-f266a2cea57b`
+- Railway Redis: `b9277361-4c87-499d-bc11-4e77fd03588c`
+- Supabase: `vwlahtguyggrhvslabax.supabase.co`
+- Default workspace: `a0000000-0000-0000-0000-000000000001`
+- First campaign: `bdd9f7a2-6dc4-4f69-bd15-773e214142e1`
+- LinkedIn App ID: 236300022
+- LinkedIn Client ID: 86cug49ujwidrz
