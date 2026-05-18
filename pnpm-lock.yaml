@@ -130,6 +130,19 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  engines/marketing-engine/runtime/cache:
+    dependencies:
+      ioredis:
+        specifier: ^5.4.0
+        version: 5.10.1
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   engines/marketing-engine/runtime/channel-health:
     dependencies:
       '@45cm/core-shared-types':
@@ -265,6 +278,15 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  engines/marketing-engine/runtime/retry-policy:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   engines/marketing-engine/runtime/rule:
     dependencies:
       '@45cm/core-shared-types':
@@ -278,11 +300,37 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  engines/marketing-engine/runtime/scheduler:
+    dependencies:
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.105.4
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   engines/marketing-engine/runtime/strategy-memory:
     dependencies:
       '@45cm/core-shared-types':
         specifier: workspace:*
         version: link:../../../../platform/shared-types
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.105.4
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  engines/marketing-engine/runtime/token-budget:
+    dependencies:
       '@supabase/supabase-js':
         specifier: ^2.45.0
         version: 2.105.4
