@@ -130,11 +130,29 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  engines/marketing-engine/runtime/baseline-config:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   engines/marketing-engine/runtime/cache:
     dependencies:
       ioredis:
         specifier: ^5.4.0
         version: 5.10.1
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  engines/marketing-engine/runtime/channel-analysis:
     devDependencies:
       '@types/node':
         specifier: ^20.0.0
@@ -177,6 +195,15 @@ importers:
       '@45cm/core-shared-types':
         specifier: workspace:*
         version: link:../../../../platform/shared-types
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  engines/marketing-engine/runtime/cross-channel-coordination:
     devDependencies:
       '@types/node':
         specifier: ^20.0.0
@@ -233,6 +260,15 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  engines/marketing-engine/runtime/event-operations:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   engines/marketing-engine/runtime/notification:
     dependencies:
       '@45cm/core-shared-types':
@@ -249,7 +285,43 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  engines/marketing-engine/runtime/operational-lifecycle:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  engines/marketing-engine/runtime/operational-recommendations:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   engines/marketing-engine/runtime/permissions:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  engines/marketing-engine/runtime/platform-restrictions:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
+  engines/marketing-engine/runtime/platform-strategy:
     devDependencies:
       '@types/node':
         specifier: ^20.0.0
