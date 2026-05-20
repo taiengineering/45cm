@@ -1,7 +1,11 @@
-import { redirect } from 'next/navigation'
+'use client'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 const RootPage = () => {
-  redirect('/home')
+  const router = useRouter()
+  useEffect(() => { router.replace('/home') }, [router])
+  return null
 }
 
 export default RootPage
