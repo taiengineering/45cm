@@ -37,21 +37,21 @@ const themeConfig: Config = {
   mode: 'dark',
   skin: 'default',
   semiDark: false,
-  layout: 'vertical',
+  layout: 'horizontal',
   layoutPadding: 24,
   compactContentWidth: 1440,
   navbar: {
     type: 'fixed',
-    contentWidth: 'compact',
-    floating: true,
-    detached: true,
+    contentWidth: 'wide',
+    floating: false,
+    detached: false,
     blur: true
   },
-  contentWidth: 'compact',
+  contentWidth: 'wide',
   footer: {
     type: 'static',
-    contentWidth: 'compact',
-    detached: true
+    contentWidth: 'wide',
+    detached: false
   },
   disableRipple: false
 }
