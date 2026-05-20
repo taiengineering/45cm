@@ -19,23 +19,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="sidebar-logo">45cm</div>
             <span className="sidebar-badge">Marketing Engine</span>
             {[
-              { href:'/dashboard', icon:'📊', label:'Dashboard' },
-              { href:'/lifecycle', icon:'🔄', label:'Lifecycle' },
-              { href:'/control', icon:'🎮', label:'Control Mode' },
-              { href:'/events', icon:'⚡', label:'Events' },
+              { href:'/', icon:'🏠', label:'Home' },
+              { href:'/studio', icon:'✏️', label:'Studio' },
+              { href:'/queue', icon:'📥', label:'Queue' },
               { href:'/surfaces', icon:'🌐', label:'Surfaces' },
+              { href:'/lifecycle', icon:'🔄', label:'Lifecycle' },
+              { href:'/control', icon:'🎮', label:'Control' },
+              { href:'/events', icon:'⚡', label:'Events' },
               { href:'/campaigns', icon:'🎯', label:'Campaigns' },
               { href:'/intelligence', icon:'🧠', label:'Intelligence' },
-              { href:'/memory', icon:'💾', label:'Strategy Memory' },
+              { href:'/memory', icon:'💾', label:'Memory' },
               { href:'/simulation', icon:'🧪', label:'Simulation' },
-              { href:'/world', icon:'🌍', label:'World' },
-              { href:'/drafts', icon:'📝', label:'Drafts' },
-              { href:'/calendar', icon:'📅', label:'Calendar' },
-              { href:'/brand', icon:'🎨', label:'Brand Studio' },
-              { href:'/visual', icon:'🖼️', label:'Visual Studio' },
-              { href:'/channels', icon:'📡', label:'Channel Health' },
-              { href:'/leads', icon:'📌', label:'Leads' },
-              { href:'/engagement', icon:'💬', label:'Engagement' },
+              { href:'/channels', icon:'📡', label:'Channels' },
               { href:'/analytics', icon:'📈', label:'Analytics' },
               { href:'/settings', icon:'🔧', label:'Settings' },
             ].map(item => (
@@ -45,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ))}
             <div style={{ flex: 1 }} />
             <a href="/queues" className="nav-item" style={{fontSize:12,color:'var(--border)'}}><span className="nav-icon">⚙️</span>System</a>
-            <div style={{ fontSize: 11, color: 'var(--muted)', padding: '8px 14px', borderTop:'1px solid var(--border)',marginTop:4 }}>v0.7.0 · Marketing Engine</div>
+            <div style={{ fontSize: 11, color: 'var(--muted)', padding: '8px 14px', borderTop:'1px solid var(--border)',marginTop:4 }}>v0.8.0 · Marketing Engine</div>
           </nav>
           <main className="main">{children}</main>
         </div>
