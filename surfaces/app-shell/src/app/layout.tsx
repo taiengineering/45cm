@@ -1,48 +1,42 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
-export const metadata: Metadata = { title: '45cm Marketing Engine', description: 'AI Marketing Operations Engine' }
-const ICON_BASE = 'https://vwlahtguyggrhvslabax.supabase.co/storage/v1/object/public/site-assets'
+export const metadata: Metadata = { title: '45cm', description: '브랜드 운영 워크스페이스' }
+const ICON = 'https://vwlahtguyggrhvslabax.supabase.co/storage/v1/object/public/site-assets'
+
+const NAV = [
+  {href:'/',label:'🏠 홈'},
+  {href:'/studio',label:'✏️ 스튜디오'},
+  {href:'/queue',label:'📥 승인함'},
+  {href:'/surfaces',label:'📡 채널상태'},
+  {href:'/lifecycle',label:'🔄 운영흐름'},
+  {href:'/events',label:'⚡ 이벤트'},
+  {href:'/patterns',label:'🧩 패턴'},
+  {href:'/assets',label:'📦 자산'},
+  {href:'/memory',label:'💾 메모리'},
+  {href:'/control',label:'🎮 제어'},
+  {href:'/settings',label:'⚙️ 설정'},
+]
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <head>
-        <link rel="icon" type="image/png" sizes="48x48" href={`${ICON_BASE}/tai-icon-48.png`} />
-        <link rel="icon" type="image/png" sizes="96x96" href={`${ICON_BASE}/tai-icon-96.png`} />
-        <link rel="icon" type="image/png" sizes="192x192" href={`${ICON_BASE}/tai-icon-192.png`} />
-        <link rel="apple-touch-icon" href={`${ICON_BASE}/tai-icon-192.png`} />
+        <link rel="icon" type="image/png" sizes="48x48" href={`${ICON}/tai-icon-48.png`} />
+        <link rel="icon" type="image/png" sizes="192x192" href={`${ICON}/tai-icon-192.png`} />
+        <link rel="apple-touch-icon" href={`${ICON}/tai-icon-192.png`} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>
-        <div className="layout">
-          <nav className="sidebar">
-            <div className="sidebar-logo">45cm</div>
-            <span className="sidebar-badge">Marketing Engine</span>
-            {[
-              { href:'/', icon:'🏠', label:'Home' },
-              { href:'/studio', icon:'✏️', label:'Studio' },
-              { href:'/assets', icon:'📦', label:'Assets' },
-              { href:'/patterns', icon:'🧩', label:'Patterns' },
-              { href:'/queue', icon:'📥', label:'Queue' },
-              { href:'/surfaces', icon:'🌐', label:'Surfaces' },
-              { href:'/lifecycle', icon:'🔄', label:'Lifecycle' },
-              { href:'/control', icon:'🎮', label:'Control' },
-              { href:'/events', icon:'⚡', label:'Events' },
-              { href:'/campaigns', icon:'🎯', label:'Campaigns' },
-              { href:'/memory', icon:'💾', label:'Memory' },
-              { href:'/channels', icon:'📡', label:'Channels' },
-              { href:'/analytics', icon:'📈', label:'Analytics' },
-              { href:'/settings', icon:'🔧', label:'Settings' },
-            ].map(item => (
-              <a key={item.href} href={item.href} className="nav-item">
-                <span className="nav-icon">{item.icon}</span>{item.label}
-              </a>
-            ))}
-            <div style={{ flex: 1 }} />
-            <a href="/queues" className="nav-item" style={{fontSize:12,color:'var(--border)'}}><span className="nav-icon">⚙️</span>System</a>
-            <div style={{ fontSize: 11, color: 'var(--muted)', padding: '8px 14px', borderTop:'1px solid var(--border)',marginTop:4 }}>v0.8.0 · Marketing Engine</div>
+        <div className="app-layout">
+          <nav className="top-nav">
+            <a href="/" className="nav-brand">45cm</a>
+            <div className="nav-links">
+              {NAV.map(n => <a key={n.href} href={n.href} className="nav-link">{n.label}</a>)}
+            </div>
+            <span className="nav-sys">v0.8</span>
           </nav>
-          <main className="main">{children}</main>
+          <main className="main-content">{children}</main>
         </div>
       </body>
     </html>
