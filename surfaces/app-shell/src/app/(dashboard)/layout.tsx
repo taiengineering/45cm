@@ -8,11 +8,9 @@ import NavbarContent from '@components/layout/horizontal/NavbarContent'
 import Footer from '@components/layout/horizontal/Footer'
 import FooterContent from '@components/layout/horizontal/FooterContent'
 
-const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
-  const direction = 'ltr'
-
+const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Providers direction={direction}>
+    <Providers direction='ltr'>
       <HorizontalLayout
         header={<Header><NavbarContent /></Header>}
         navigation={<Navigation><HorizontalMenu /></Navigation>}
