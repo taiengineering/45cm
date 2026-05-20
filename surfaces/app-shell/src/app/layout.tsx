@@ -1,40 +1,29 @@
 // Next Imports
 import type { Metadata } from 'next'
 
-// Component Imports
-import Providers from '@components/Providers'
-import BlankLayout from '@layouts/BlankLayout'
-import NotFound from '@components/NotFound'
+// Third-party Imports
+import 'react-perfect-scrollbar/dist/css/styles.css'
 
-// Config Imports
-import { i18n } from '@configs/i18n'
-
-// Util Imports
-import { getSystemMode } from '@core/utils/serverHelpers'
-
-type Props = {
-  children: React.ReactNode
-  params: Promise<{ lang: string }>
-}
+// Style Imports
+import '@core/styles/index.css'
 
 export const metadata: Metadata = {
   title: '45cm · 브랜드 운영 워크스페이스',
-  description: 'AI Marketing Operations Engine'
+  description: 'AI Marketing Operations Engine',
+  icons: [
+    { url: 'https://vwlahtguyggrhvslabax.supabase.co/storage/v1/object/public/site-assets/tai-icon-48.png', sizes: '48x48', type: 'image/png' },
+    { url: 'https://vwlahtguyggrhvslabax.supabase.co/storage/v1/object/public/site-assets/tai-icon-192.png', sizes: '192x192', type: 'image/png' },
+  ]
 }
 
-const Layout = async ({ children }: Props) => {
-  const direction = 'ltr'
-  const systemMode = await getSystemMode()
-
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang='ko' dir={direction}>
+    <html lang='ko' dir='ltr'>
       <body className='flex is-full min-bs-full flex-auto flex-col'>
-        <Providers direction={direction}>
-          {children}
-        </Providers>
+        {children}
       </body>
     </html>
   )
 }
 
-export default Layout
+export default RootLayout

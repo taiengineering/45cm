@@ -7,7 +7,7 @@ import NavbarContent from '@components/layout/vertical/NavbarContent'
 import Footer from '@components/layout/vertical/Footer'
 import FooterContent from '@components/layout/vertical/FooterContent'
 
-const Layout = async ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const direction = 'ltr'
 
   return (
@@ -23,4 +23,4 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default Layout
+export default DashboardLayout

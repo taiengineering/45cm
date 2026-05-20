@@ -1,5 +1,8 @@
+// Next Imports
 import { redirect } from 'next/navigation'
 
-export default function RootPage() {
+const DashboardRootPage = () => {
   redirect('/home')
 }
+
+export default DashboardRootPage
