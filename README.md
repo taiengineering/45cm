@@ -1,66 +1,40 @@
 # 45cm Marketing Engine
 
 > AI Marketing Operations Engine — Reach, Engage, Convert
-
-사람이 전략을 넣고, 엔진이 운영을 증폭하는 시스템.
+> v0.8.0 · 29 Sprints · 46 Packages · 24 Pages
 
 ## 현재 상태
 
-- **API**: v0.7.0 (Railway) — `api.45cm.com`
-- **Console**: 20 pages (Cloudflare) — `app.45cm.com`
-- **Engine Packages**: 36
-- **DB Tables**: 36+
-- **Channel Adapters**: 18채널 (LinkedIn 실제 연결)
-- **작업지시서**: 24개 완료
-- **해결된 이슈**: 12개
-- **운영 모드**: Operational Preview (mock publish)
+| 항목 | 값 |
+|------|----|
+| API | v0.8.0 @ api.45cm.com |
+| Console | 24 pages @ app.45cm.com |
+| Packages | 46 |
+| DB Tables | 62+ |
+| Docs | 30+ |
+| Sprints | 29 완료 |
+| Channels | 18 (뺔용) / LinkedIn 실제 연결 |
+| Mode | Assisted (Auto/Assisted/Manual) |
 
-## 아키텍처
+## Workspace 구조
 
 ```
-engines/marketing-engine/      ← 36 packages
-  runtime/ai/                  ← AI 생성
-  runtime/queue/               ← BullMQ Queue
-  runtime/publish/             ← 채널 발행
-  runtime/publish-safety/      ← 발행 안전 (5개 검증)
-  runtime/token-budget/        ← 비용 제어
-  runtime/policy-engine/       ← 8개 운영 정책
-  runtime/permissions/         ← 5 Role
-  runtime/emergency-stop/      ← 1클릭 중단
-  runtime/channel-integration/ ← 18채널 + OAuth Runtime
-  runtime/platform-restrictions/← 플랫폼 제약
-  runtime/platform-strategy/   ← 자동화 전략
-  runtime/simulation/          ← 시뮬레이션
-  runtime/simulation-world/    ← 운영 세계
-  runtime/runtime-manager/     ← 엔진 모드
-platform/                      ← auth, billing, workspace
-surfaces/app-shell/            ← Console (Next.js, 20페이지)
-docs/                          ← 25+ 문서
+Home (Feed)  →  오늘의 상태 + 해야 할 것
+Studio       →  Content/Shorts/Visual/Preview
+Queue        →  승인/이벤트/회복/Surface
+Surfaces     →  채널별 브랜드 Surface
+Lifecycle    →  Connect→Analyze→Baseline→Regular→Event→Recovery
+Control      →  Auto/Assisted/Manual + 기능별 제어
+Events       →  이벤트 운영
+Analytics    →  분석
+Settings     →  18채널 연동
 ```
 
-## Runtime Tiers (5계층)
+## 링크
 
-| Tier | Packages |
-|------|----------|
-| Core | ai, queue, publish, db, event, scheduler, cache |
-| Safety | tenant-isolation, policy-engine, permissions, publish-safety, token-budget, retry-policy, emergency-stop |
-| Operational | campaign-intelligence, channel-health, strategy-memory, channel-integration, visual, brand |
-| Simulation | simulation |
-| Experimental | simulation-world |
-
-## 플랫폼 자동화 레벨
-
-| 레벨 | 채널 |
-|------|--------|
-| full_automation | LinkedIn, Facebook, Instagram, YouTube, Threads, Google Business |
-| assisted | Naver Blog, Kakao Channel, Email, Alimtalk |
-| manual_required | Tistory, Brunch, Naver Cafe, Naver Place |
-
-## 문서
-
-- [Work Log](docs/work-log-full-session.md) — 24개 작업지시서 상세
-- [Issue Log](docs/issues/issue-log.md) — 12 해결 + 8 대기
+- [Work Log](docs/work-log-full-session.md)
+- [Issue Log](docs/issues/issue-log.md)
+- [TAI Operational Report](docs/TAI_OPERATIONAL_REPORT.md)
 - [Runtime Guides](docs/runtime/RUNTIME_GUIDES.md)
 - [Platform Capabilities](docs/platforms/REAL_PLATFORM_CAPABILITIES.md)
 - [Production Readiness](docs/PRODUCTION_READINESS.md)
-- [Incident Playbook](docs/SAAS_INCIDENT_PLAYBOOK.md)
