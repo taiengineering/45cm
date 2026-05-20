@@ -21,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {[
               { href:'/', icon:'🏠', label:'Home' },
               { href:'/studio', icon:'✏️', label:'Studio' },
+              { href:'/assets', icon:'📦', label:'Assets' },
               { href:'/queue', icon:'📥', label:'Queue' },
               { href:'/surfaces', icon:'🌐', label:'Surfaces' },
               { href:'/lifecycle', icon:'🔄', label:'Lifecycle' },
@@ -29,7 +30,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               { href:'/campaigns', icon:'🎯', label:'Campaigns' },
               { href:'/intelligence', icon:'🧠', label:'Intelligence' },
               { href:'/memory', icon:'💾', label:'Memory' },
-              { href:'/simulation', icon:'🧪', label:'Simulation' },
               { href:'/channels', icon:'📡', label:'Channels' },
               { href:'/analytics', icon:'📈', label:'Analytics' },
               { href:'/settings', icon:'🔧', label:'Settings' },
