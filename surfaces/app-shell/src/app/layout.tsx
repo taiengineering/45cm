@@ -20,6 +20,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <span className="sidebar-badge">Marketing Engine</span>
             {[
               { href:'/dashboard', icon:'📊', label:'Dashboard' },
+              { href:'/lifecycle', icon:'🔄', label:'Lifecycle' },
+              { href:'/events', icon:'⚡', label:'Events' },
               { href:'/campaigns', icon:'🎯', label:'Campaigns' },
               { href:'/intelligence', icon:'🧠', label:'Intelligence' },
               { href:'/memory', icon:'💾', label:'Strategy Memory' },
