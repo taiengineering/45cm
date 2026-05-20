@@ -1,44 +1,40 @@
+// Next Imports
 import type { Metadata } from 'next'
-import './globals.css'
 
-export const metadata: Metadata = { title: '45cm', description: '브랜드 운영 워크스페이스' }
-const ICON = 'https://vwlahtguyggrhvslabax.supabase.co/storage/v1/object/public/site-assets'
+// Component Imports
+import Providers from '@components/Providers'
+import BlankLayout from '@layouts/BlankLayout'
+import NotFound from '@components/NotFound'
 
-const NAV = [
-  {href:'/',label:'🏠 홈'},
-  {href:'/studio',label:'✏️ 스튜디오'},
-  {href:'/queue',label:'📥 승인함'},
-  {href:'/surfaces',label:'📡 채널상태'},
-  {href:'/lifecycle',label:'🔄 운영흐름'},
-  {href:'/events',label:'⚡ 이벤트'},
-  {href:'/patterns',label:'🧩 패턴'},
-  {href:'/assets',label:'📦 자산'},
-  {href:'/memory',label:'💾 메모리'},
-  {href:'/control',label:'🎮 제어'},
-  {href:'/settings',label:'⚙️ 설정'},
-]
+// Config Imports
+import { i18n } from '@configs/i18n'
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+// Util Imports
+import { getSystemMode } from '@core/utils/serverHelpers'
+
+type Props = {
+  children: React.ReactNode
+  params: Promise<{ lang: string }>
+}
+
+export const metadata: Metadata = {
+  title: '45cm · 브랜드 운영 워크스페이스',
+  description: 'AI Marketing Operations Engine'
+}
+
+const Layout = async ({ children }: Props) => {
+  const direction = 'ltr'
+  const systemMode = await getSystemMode()
+
   return (
-    <html lang="ko">
-      <head>
-        <link rel="icon" type="image/png" sizes="48x48" href={`${ICON}/tai-icon-48.png`} />
-        <link rel="icon" type="image/png" sizes="192x192" href={`${ICON}/tai-icon-192.png`} />
-        <link rel="apple-touch-icon" href={`${ICON}/tai-icon-192.png`} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
-      <body>
-        <div className="app-layout">
-          <nav className="top-nav">
-            <a href="/" className="nav-brand">45cm</a>
-            <div className="nav-links">
-              {NAV.map(n => <a key={n.href} href={n.href} className="nav-link">{n.label}</a>)}
-            </div>
-            <span className="nav-sys">v0.8</span>
-          </nav>
-          <main className="main-content">{children}</main>
-        </div>
+    <html lang='ko' dir={direction}>
+      <body className='flex is-full min-bs-full flex-auto flex-col'>
+        <Providers direction={direction}>
+          {children}
+        </Providers>
       </body>
     </html>
   )
 }
+
+export default Layout
