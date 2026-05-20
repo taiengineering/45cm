@@ -2,10 +2,8 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
-const DashboardRootPage = () => {
+export default function DashboardRootPage() {
   const router = useRouter()
   useEffect(() => { router.replace('/home') }, [router])
   return null
 }
-
-export default DashboardRootPage

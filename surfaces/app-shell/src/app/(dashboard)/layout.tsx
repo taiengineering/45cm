@@ -1,25 +1,12 @@
-// Component Imports
-import Providers from '@components/Providers'
-import HorizontalLayout from '@layouts/HorizontalLayout'
-import Header from '@components/layout/horizontal/Header'
-import Navigation from '@components/layout/horizontal/Navigation'
-import HorizontalMenu from '@components/layout/horizontal/HorizontalMenu'
-import NavbarContent from '@components/layout/horizontal/NavbarContent'
-import Footer from '@components/layout/horizontal/Footer'
-import FooterContent from '@components/layout/horizontal/FooterContent'
+'use client'
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+import Providers from '@/components/45cm/Providers'
+import DashboardLayout from '@/components/45cm/DashboardLayout'
+
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <Providers direction='ltr'>
-      <HorizontalLayout
-        header={<Header><NavbarContent /></Header>}
-        navigation={<Navigation><HorizontalMenu /></Navigation>}
-        footer={<Footer><FooterContent /></Footer>}
-      >
-        {children}
-      </HorizontalLayout>
+    <Providers>
+      <DashboardLayout>{children}</DashboardLayout>
     </Providers>
   )
 }
-
-export default DashboardLayout

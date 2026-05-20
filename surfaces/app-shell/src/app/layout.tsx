@@ -1,8 +1,4 @@
-// Next Imports
 import type { Metadata } from 'next'
-
-// Third-party Imports
-import 'react-perfect-scrollbar/dist/css/styles.css'
 
 export const metadata: Metadata = {
   title: '45cm · 브랜드 운영 워크스페이스',
@@ -13,14 +9,16 @@ export const metadata: Metadata = {
   ]
 }
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='ko' dir='ltr'>
-      <body className='flex is-full min-bs-full flex-auto flex-col'>
+    <html lang='ko'>
+      <head>
+        <link rel='preconnect' href='https://cdn.jsdelivr.net' />
+        <link href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css' rel='stylesheet' />
+      </head>
+      <body style={{ margin: 0 }}>
         {children}
       </body>
     </html>
   )
 }
-
-export default RootLayout
