@@ -1,10 +1,8 @@
 'use client'
 
-// MUI Imports
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import CardHeader from '@mui/material/CardHeader'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Chip from '@mui/material/Chip'
@@ -17,36 +15,28 @@ const QUEUE = [
   { type: '회복', title: '인스타그램 쉬어가기 권장', risk: '낮음', confidence: 88, reason: '운영량이 많아져 피로해지고 있어요', color: 'success' as const },
 ]
 
-const QueuePage = () => {
+export default function QueuePage() {
   return (
     <Grid container spacing={6}>
       <Grid size={{ xs: 12 }}>
         <Typography variant='h4' sx={{ fontWeight: 700 }}>승인함</Typography>
-        <Typography variant='body2' color='text.secondary' sx={{ mb: 4 }}>
-          검토가 필요한 항목들입니다. 왜 검토가 필요한지 함께 보여드립니다.
-        </Typography>
+        <Typography variant='body2' color='text.secondary' sx={{ mb: 4 }}>검토가 필요한 항목들입니다. 왜 검토가 필요한지 함께 보여드립니다.</Typography>
       </Grid>
-
-      {/* Stats */}
       {[{ l: '승인', c: 2, color: 'primary' }, { l: '이벤트', c: 1, color: 'error' }, { l: '회복', c: 1, color: 'success' }, { l: '전체', c: 4, color: 'secondary' }].map(s => (
         <Grid key={s.l} size={{ xs: 6, sm: 3 }}>
-          <Card>
-            <CardContent sx={{ textAlign: 'center' }}>
-              <Typography variant='h4' color={`${s.color}.main`} sx={{ fontWeight: 700 }}>{s.c}</Typography>
-              <Typography variant='body2' color='text.secondary'>{s.l}</Typography>
-            </CardContent>
-          </Card>
+          <Card><CardContent sx={{ textAlign: 'center' }}>
+            <Typography variant='h4' color={`${s.color}.main`} sx={{ fontWeight: 700 }}>{s.c}</Typography>
+            <Typography variant='body2' color='text.secondary'>{s.l}</Typography>
+          </CardContent></Card>
         </Grid>
       ))}
-
-      {/* Queue Items */}
       {QUEUE.map((q, i) => (
         <Grid key={i} size={{ xs: 12 }}>
           <Card>
             <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 3 }}>
               <Box sx={{ flex: 1 }}>
                 <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
-                  <Chip label={q.type} size='small' color={q.color} variant='tonal' />
+                  <Chip label={q.type} size='small' color={q.color} />
                   <Chip label={`위험: ${q.risk}`} size='small' variant='outlined' />
                   <Typography variant='caption' color='text.secondary'>AI {q.confidence}%</Typography>
                 </Box>
@@ -55,7 +45,7 @@ const QueuePage = () => {
               </Box>
               <Box sx={{ display: 'flex', gap: 1, mt: 0.5 }}>
                 <Button variant='contained' size='small' color='success'>✅ 승인</Button>
-                <Button variant='outlined' size='small' color='secondary'>❌ 거절</Button>
+                <Button variant='outlined' size='small'>❌ 거절</Button>
               </Box>
             </CardContent>
           </Card>
@@ -64,5 +54,3 @@ const QueuePage = () => {
     </Grid>
   )
 }
-
-export default QueuePage
