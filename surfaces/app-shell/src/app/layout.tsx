@@ -21,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {[
               { href:'/dashboard', icon:'📊', label:'Dashboard' },
               { href:'/lifecycle', icon:'🔄', label:'Lifecycle' },
+              { href:'/control', icon:'🎮', label:'Control Mode' },
               { href:'/events', icon:'⚡', label:'Events' },
               { href:'/surfaces', icon:'🌐', label:'Surfaces' },
               { href:'/campaigns', icon:'🎯', label:'Campaigns' },
