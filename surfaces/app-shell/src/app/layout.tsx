@@ -4,9 +4,6 @@ import type { Metadata } from 'next'
 // Third-party Imports
 import 'react-perfect-scrollbar/dist/css/styles.css'
 
-// Style Imports
-import '@core/styles/index.css'
-
 export const metadata: Metadata = {
   title: '45cm · 브랜드 운영 워크스페이스',
   description: 'AI Marketing Operations Engine',
