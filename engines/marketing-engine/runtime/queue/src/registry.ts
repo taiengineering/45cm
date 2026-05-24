@@ -60,11 +60,13 @@ export const QUEUE_PRIORITY = {
 } as const;
 
 // Enqueue with priority
+// NOTE: 'timeout' removed from JobsOptions — not supported in BullMQ 5.x+
+// Worker-level timeout should be used instead (lockDuration in Worker config)
 export async function enqueueWithPriority(queueName: string, jobName: string, data: any, priority?: number): Promise<string | null> {
   const queue = queueRegistry.getQueue(queueName);
   if (!queue) return null;
   const p = priority ?? queueRegistry.getPriority(queueName);
-  const job = await queue.add(jobName, data, { priority: p, attempts: 3, backoff: { type: 'exponential', delay: 2000 }, timeout: 30000 });
+  const job = await queue.add(jobName, data, { priority: p, attempts: 3, backoff: { type: 'exponential', delay: 2000 } });
   return job.id ?? null;
 }
 
