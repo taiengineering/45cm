@@ -1,40 +1,48 @@
-# 45cm Marketing Engine
+# ⚠️ FROZEN LEGACY RUNTIME
 
-> AI Marketing Operations Engine — Reach, Engage, Convert
-> v0.8.0 · 29 Sprints · 46 Packages · 24 Pages
+> 이 repository는 historical/migration origin 용도로만 유지됩니다.
+> **Canonical active runtime:** → [45cminc/mkt-runtime](https://github.com/45cminc/mkt-runtime)
+> 신규 개발/배포/운영은 canonical repository에서만 수행합니다.
 
-## 현재 상태
+---
 
-| 항목 | 값 |
-|------|----|
-| API | v0.8.0 @ api.45cm.com |
-| Console | 24 pages @ app.45cm.com |
-| Packages | 46 |
-| DB Tables | 62+ |
-| Docs | 30+ |
-| Sprints | 29 완료 |
-| Channels | 18 (뺔용) / LinkedIn 실제 연결 |
-| Mode | Assisted (Auto/Assisted/Manual) |
+## Status: ❄️ FROZEN HISTORICAL ORIGIN
 
-## Workspace 구조
+**Date:** 2026-05-25
+**Previous role:** 45cm Marketing Engine monorepo
+**Current role:** Frozen historical origin — DO NOT use for active development
 
-```
-Home (Feed)  →  오늘의 상태 + 해야 할 것
-Studio       →  Content/Shorts/Visual/Preview
-Queue        →  승인/이벤트/회복/Surface
-Surfaces     →  채널별 브랜드 Surface
-Lifecycle    →  Connect→Analyze→Baseline→Regular→Event→Recovery
-Control      →  Auto/Assisted/Manual + 기능별 제어
-Events       →  이벤트 운영
-Analytics    →  분석
-Settings     →  18채널 연동
-```
+---
 
-## 링크
+## What This Repo Was
 
-- [Work Log](docs/work-log-full-session.md)
-- [Issue Log](docs/issues/issue-log.md)
-- [TAI Operational Report](docs/TAI_OPERATIONAL_REPORT.md)
-- [Runtime Guides](docs/runtime/RUNTIME_GUIDES.md)
-- [Platform Capabilities](docs/platforms/REAL_PLATFORM_CAPABILITIES.md)
-- [Production Readiness](docs/PRODUCTION_READINESS.md)
+45cm Marketing Engine monorepo containing:
+- Marketing domain runtime (campaign, funnel, channels)
+- Platform capabilities (auth, billing, workspace)
+- Surfaces (admin, app-shell)
+
+## What Happened
+
+1. Marketing capabilities physically migrated to `taiengineering/mkt-runtime`
+2. Organizational ownership repatriated to `45cminc/mkt-runtime`
+3. Platform capabilities (auth/billing/workspace) remain frozen here
+4. This repo is now historical origin only
+
+## Canonical Ownership
+
+| Capability | Canonical Owner |
+|-----------|----------------|
+| Marketing Runtime | [45cminc/mkt-runtime](https://github.com/45cminc/mkt-runtime) |
+| Marketing UI | 45cminc/ui/apps/mkt-ui |
+| Shell | 45cminc/ui/apps/shell |
+| Orchestration | 45cminc/fgw |
+| Governance | taiengineering/federation-governance |
+
+## Rules
+
+1. ❌ DO NOT add new features
+2. ❌ DO NOT deploy from this repo
+3. ❌ DO NOT create feature branches
+4. ❌ DO NOT reconnect to Railway
+5. ✅ Use as migration reference only
+6. ✅ Retained for git history + rollback reference
