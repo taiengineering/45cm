@@ -1,0 +1,1783 @@
+[
+  {
+    "name": "oauth",
+    "lines": 478,
+    "prefix": "",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "/{provider}",
+        "full_path": "/{provider}",
+        "handler": "oauth_start"
+      },
+      {
+        "method": "GET",
+        "route": "/{provider}/callback",
+        "full_path": "/{provider}/callback",
+        "handler": "oauth_callback"
+      },
+      {
+        "method": "POST",
+        "route": "/register",
+        "full_path": "/register",
+        "handler": "oauth_register"
+      },
+      {
+        "method": "POST",
+        "route": "/link",
+        "full_path": "/link",
+        "handler": "oauth_link"
+      },
+      {
+        "method": "POST",
+        "route": "/unlink",
+        "full_path": "/unlink",
+        "handler": "oauth_unlink"
+      },
+      {
+        "method": "GET",
+        "route": "/links/{user_id}",
+        "full_path": "/links/{user_id}",
+        "handler": "get_oauth_links"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "users"
+    ],
+    "router_imports": [
+      "identity"
+    ],
+    "capabilities": [],
+    "classification": "ACTIVE",
+    "reason": "프론트 HTML/JS 참조 2건",
+    "frontend_refs": [
+      {
+        "endpoint": "/register",
+        "file": "nexas/log-in.html"
+      },
+      {
+        "endpoint": "/register",
+        "file": "nexas/node_modules/path-to-regexp/package.json"
+      },
+      {
+        "endpoint": "/register",
+        "file": "nexas/node_modules/ajv/package.json"
+      },
+      {
+        "endpoint": "/register",
+        "file": "nexas/connect.html"
+      },
+      {
+        "endpoint": "/register",
+        "file": "docs/cursor-task/2026-03-31_TAI_Cursor_작업지시서_회사등록_온보딩__taiadmin.md"
+      },
+      {
+        "endpoint": "/register",
+        "file": "docs/cursor-task/cursor-login-fix.md"
+      },
+      {
+        "endpoint": "/register",
+        "file": "docs/2026-05-25_e2e_open_verification.md"
+      },
+      {
+        "endpoint": "/register",
+        "file": "docs/workorder/workorder-pricing-frontend__taiadmin.md"
+      },
+      {
+        "endpoint": "/link",
+        "file": "nexas/node_modules/picomatch/README.md"
+      },
+      {
+        "endpoint": "/link",
+        "file": "nexas/node_modules/is-glob/README.md"
+      },
+      {
+        "endpoint": "/link",
+        "file": "nexas/node_modules/mime-types/node_modules/mime-db/db.json"
+      },
+      {
+        "endpoint": "/link",
+        "file": "nexas/node_modules/mime-db/db.json"
+      },
+      {
+        "endpoint": "/link",
+        "file": "docs/task/2026-03-30_TASK_ENGINE_MODEL__taiadmin.md"
+      }
+    ],
+    "frontend_refs_strict": [
+      {
+        "endpoint": "/register",
+        "file": "nexas/log-in.html"
+      },
+      {
+        "endpoint": "/register",
+        "file": "nexas/connect.html"
+      }
+    ],
+    "doc_refs": [
+      {
+        "endpoint": "/register",
+        "file": "docs/cursor-task/2026-03-31_TAI_Cursor_작업지시서_회사등록_온보딩__taiadmin.md"
+      },
+      {
+        "endpoint": "/register",
+        "file": "docs/cursor-task/cursor-login-fix.md"
+      },
+      {
+        "endpoint": "/register",
+        "file": "docs/2026-05-25_e2e_open_verification.md"
+      },
+      {
+        "endpoint": "/register",
+        "file": "docs/workorder/workorder-pricing-frontend__taiadmin.md"
+      },
+      {
+        "endpoint": "/register",
+        "file": "docs/partner/PARTNER_REGISTRATION_DESIGN__taiadmin.md"
+      },
+      {
+        "endpoint": "/link",
+        "file": "docs/task/2026-03-30_TASK_ENGINE_MODEL__taiadmin.md"
+      }
+    ]
+  },
+  {
+    "name": "auth_oauth",
+    "lines": 233,
+    "prefix": "/auth",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "POST",
+        "route": "/oauth-login",
+        "full_path": "/auth/oauth-login",
+        "handler": "oauth_login"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "users"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 1건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/auth/oauth-login",
+        "file": "docs/workorder/WORK_INSTRUCTION_OAUTH__taiapi.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/auth/oauth-login",
+        "file": "docs/workorder/WORK_INSTRUCTION_OAUTH__taiapi.md"
+      }
+    ]
+  },
+  {
+    "name": "workers",
+    "lines": 197,
+    "prefix": "/workers",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "POST",
+        "route": "/invite",
+        "full_path": "/workers/invite",
+        "handler": "invite_worker"
+      },
+      {
+        "method": "GET",
+        "route": "/factory/{factory_id}",
+        "full_path": "/workers/factory/{factory_id}",
+        "handler": "list_workers"
+      },
+      {
+        "method": "GET",
+        "route": "/home/{worker_id}",
+        "full_path": "/workers/home/{worker_id}",
+        "handler": "worker_home"
+      },
+      {
+        "method": "PATCH",
+        "route": "/{worker_id}",
+        "full_path": "/workers/{worker_id}",
+        "handler": "patch_worker"
+      },
+      {
+        "method": "GET",
+        "route": "/{worker_id}",
+        "full_path": "/workers/{worker_id}",
+        "handler": "get_worker"
+      }
+    ],
+    "services": [
+      "inbox_notify_svc"
+    ],
+    "db_tables": [
+      "factories",
+      "work_schedules",
+      "worker_registry"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 6건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/workers/home",
+        "file": "docs/2026-05-14_P2_WORKORDER.md"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/2026-05-26_cursor_dashboard_rebuild.md"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/cursor-task/2026-04-01_TAI_Cursor_작업지시서_건설관리페이지__taiadmin.md"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/cursor-task/2026-03-31_TAI_Cursor_작업지시서_작업자등록__taiadmin.md"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/2026-05-25_e2e_open_verification.md"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/document-system/DOCUMENT_MAP_KEY30__taiapi.csv"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/document-system/DOCUMENT_MAP_FULL__taiapi.csv"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/notification-platform/existing-push-flow-validation.md"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/notification-platform/existing-push-call-registry.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/workers/home",
+        "file": "docs/2026-05-14_P2_WORKORDER.md"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/2026-05-26_cursor_dashboard_rebuild.md"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/cursor-task/2026-04-01_TAI_Cursor_작업지시서_건설관리페이지__taiadmin.md"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/cursor-task/2026-03-31_TAI_Cursor_작업지시서_작업자등록__taiadmin.md"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/2026-05-25_e2e_open_verification.md"
+      },
+      {
+        "endpoint": "/workers",
+        "file": "docs/document-system/DOCUMENT_MAP_KEY30__taiapi.csv"
+      }
+    ]
+  },
+  {
+    "name": "alert_messages",
+    "lines": 233,
+    "prefix": "/alert-messages",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "",
+        "full_path": "/alert-messages/",
+        "handler": "list_alerts"
+      },
+      {
+        "method": "GET",
+        "route": "/codes",
+        "full_path": "/alert-messages/codes",
+        "handler": "list_alert_codes"
+      },
+      {
+        "method": "GET",
+        "route": "/contexts",
+        "full_path": "/alert-messages/contexts",
+        "handler": "list_contexts"
+      },
+      {
+        "method": "POST",
+        "route": "",
+        "full_path": "/alert-messages/",
+        "handler": "create_alert"
+      },
+      {
+        "method": "PATCH",
+        "route": "/{alert_id}",
+        "full_path": "/alert-messages/{alert_id}",
+        "handler": "update_alert"
+      },
+      {
+        "method": "PATCH",
+        "route": "/{alert_id}/toggle",
+        "full_path": "/alert-messages/{alert_id}/toggle",
+        "handler": "toggle_alert"
+      },
+      {
+        "method": "DELETE",
+        "route": "/{alert_id}",
+        "full_path": "/alert-messages/{alert_id}",
+        "handler": "delete_alert"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "system_alert_messages"
+    ],
+    "router_imports": [
+      "auth"
+    ],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 3건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/alert-messages",
+        "file": "docs/backend-spec/2026-04-01_TAI_Backend_MEMORY_final__taiapi.md"
+      },
+      {
+        "endpoint": "/alert-messages",
+        "file": "docs/backend-spec/2026-04-01_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/alert-messages",
+        "file": "docs/cursor-task/2026-04-01_TAI_Cursor_세션작업_프론트동기화__taiadmin.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/alert-messages",
+        "file": "docs/backend-spec/2026-04-01_TAI_Backend_MEMORY_final__taiapi.md"
+      },
+      {
+        "endpoint": "/alert-messages",
+        "file": "docs/backend-spec/2026-04-01_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/alert-messages",
+        "file": "docs/cursor-task/2026-04-01_TAI_Cursor_세션작업_프론트동기화__taiadmin.md"
+      }
+    ]
+  },
+  {
+    "name": "areas",
+    "lines": 39,
+    "prefix": "/areas",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "",
+        "full_path": "/areas/",
+        "handler": "get_areas"
+      },
+      {
+        "method": "GET",
+        "route": "/{area_id}",
+        "full_path": "/areas/{area_id}",
+        "handler": "get_area"
+      },
+      {
+        "method": "POST",
+        "route": "",
+        "full_path": "/areas/",
+        "handler": "create_area"
+      },
+      {
+        "method": "PATCH",
+        "route": "/{area_id}",
+        "full_path": "/areas/{area_id}",
+        "handler": "update_area"
+      },
+      {
+        "method": "DELETE",
+        "route": "/{area_id}",
+        "full_path": "/areas/{area_id}",
+        "handler": "delete_area"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "areas"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 2건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/areas",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/areas",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/areas",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/areas",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      }
+    ]
+  },
+  {
+    "name": "buildings",
+    "lines": 37,
+    "prefix": "/buildings",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "",
+        "full_path": "/buildings/",
+        "handler": "get_buildings"
+      },
+      {
+        "method": "GET",
+        "route": "/{building_id}",
+        "full_path": "/buildings/{building_id}",
+        "handler": "get_building"
+      },
+      {
+        "method": "POST",
+        "route": "",
+        "full_path": "/buildings/",
+        "handler": "create_building"
+      },
+      {
+        "method": "PATCH",
+        "route": "/{building_id}",
+        "full_path": "/buildings/{building_id}",
+        "handler": "update_building"
+      },
+      {
+        "method": "DELETE",
+        "route": "/{building_id}",
+        "full_path": "/buildings/{building_id}",
+        "handler": "delete_building"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "buildings"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 2건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/buildings",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/buildings",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/buildings",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/buildings",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      }
+    ]
+  },
+  {
+    "name": "connect_provider",
+    "lines": 273,
+    "prefix": "",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "/connect/provider/profile",
+        "full_path": "/connect/provider/profile",
+        "handler": "get_provider_profile"
+      },
+      {
+        "method": "GET",
+        "route": "/connect/services",
+        "full_path": "/connect/services",
+        "handler": "list_connect_services"
+      },
+      {
+        "method": "GET",
+        "route": "/connect/provider/services",
+        "full_path": "/connect/provider/services",
+        "handler": "get_my_provider_services"
+      },
+      {
+        "method": "POST",
+        "route": "/connect/provider/services/upsert",
+        "full_path": "/connect/provider/services/upsert",
+        "handler": "upsert_provider_service"
+      },
+      {
+        "method": "POST",
+        "route": "/connect/provider/services/batch",
+        "full_path": "/connect/provider/services/batch",
+        "handler": "batch_upsert_provider_services"
+      },
+      {
+        "method": "DELETE",
+        "route": "/connect/provider/services/{record_id}",
+        "full_path": "/connect/provider/services/{record_id}",
+        "handler": "delete_provider_service"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "connect_provider_services",
+      "connect_providers",
+      "connect_service_master"
+    ],
+    "router_imports": [
+      "auth"
+    ],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 1건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/connect/provider/profile",
+        "file": "docs/work-log/worklog-2026-0418__taiapi.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/connect/provider/profile",
+        "file": "docs/work-log/worklog-2026-0418__taiapi.md"
+      }
+    ]
+  },
+  {
+    "name": "contacts",
+    "lines": 430,
+    "prefix": "",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "/companies/{company_id}/contacts",
+        "full_path": "/companies/{company_id}/contacts",
+        "handler": "get_company_contacts"
+      },
+      {
+        "method": "POST",
+        "route": "/companies/{company_id}/contacts",
+        "full_path": "/companies/{company_id}/contacts",
+        "handler": "add_company_contact"
+      },
+      {
+        "method": "PATCH",
+        "route": "/companies/{company_id}/contacts/{contact_id}",
+        "full_path": "/companies/{company_id}/contacts/{contact_id}",
+        "handler": "update_company_contact"
+      },
+      {
+        "method": "DELETE",
+        "route": "/companies/{company_id}/contacts/{contact_id}",
+        "full_path": "/companies/{company_id}/contacts/{contact_id}",
+        "handler": "delete_company_contact"
+      },
+      {
+        "method": "GET",
+        "route": "/factories/{factory_id}/contacts",
+        "full_path": "/factories/{factory_id}/contacts",
+        "handler": "get_factory_contacts"
+      },
+      {
+        "method": "POST",
+        "route": "/factories/{factory_id}/contacts",
+        "full_path": "/factories/{factory_id}/contacts",
+        "handler": "add_factory_contact"
+      },
+      {
+        "method": "PATCH",
+        "route": "/factories/{factory_id}/contacts/{contact_id}",
+        "full_path": "/factories/{factory_id}/contacts/{contact_id}",
+        "handler": "update_factory_contact"
+      },
+      {
+        "method": "DELETE",
+        "route": "/factories/{factory_id}/contacts/{contact_id}",
+        "full_path": "/factories/{factory_id}/contacts/{contact_id}",
+        "handler": "delete_factory_contact"
+      },
+      {
+        "method": "GET",
+        "route": "/companies/{company_id}/files",
+        "full_path": "/companies/{company_id}/files",
+        "handler": "get_company_files"
+      },
+      {
+        "method": "POST",
+        "route": "/companies/{company_id}/files/upload",
+        "full_path": "/companies/{company_id}/files/upload",
+        "handler": "upload_company_file"
+      },
+      {
+        "method": "POST",
+        "route": "/companies/{company_id}/files/url",
+        "full_path": "/companies/{company_id}/files/url",
+        "handler": "save_contract_url"
+      },
+      {
+        "method": "DELETE",
+        "route": "/companies/{company_id}/files/{file_id}",
+        "full_path": "/companies/{company_id}/files/{file_id}",
+        "handler": "delete_company_file"
+      },
+      {
+        "method": "GET",
+        "route": "/companies/{company_id}/contracts",
+        "full_path": "/companies/{company_id}/contracts",
+        "handler": "get_company_contracts"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "companies",
+      "company_contacts",
+      "company_files",
+      "contracts",
+      "factories",
+      "factory_contacts"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 6건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/companies",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/companies",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiadmin_dup.md"
+      },
+      {
+        "endpoint": "/companies",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiadmin.md"
+      },
+      {
+        "endpoint": "/companies",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/companies",
+        "file": "docs/backend-spec/2026-03-31_TAI_Backend_MEMORY_final__taiapi.md"
+      },
+      {
+        "endpoint": "/companies",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY_final__taiapi.md"
+      },
+      {
+        "endpoint": "/companies",
+        "file": "docs/cursor-task/2026-03-31_TAI_Cursor_작업지시서_회사등록_온보딩__taiadmin.md"
+      },
+      {
+        "endpoint": "/companies",
+        "file": "docs/2026-05-25_e2e_open_verification.md"
+      },
+      {
+        "endpoint": "/factories",
+        "file": "docs/backend-spec/2026-04-01_TAI_Backend_MEMORY_final__taiapi.md"
+      },
+      {
+        "endpoint": "/factories",
+        "file": "docs/2026-05-25_session_full_record.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/companies",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/companies",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiadmin_dup.md"
+      },
+      {
+        "endpoint": "/companies",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiadmin.md"
+      },
+      {
+        "endpoint": "/companies",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/companies",
+        "file": "docs/backend-spec/2026-03-31_TAI_Backend_MEMORY_final__taiapi.md"
+      },
+      {
+        "endpoint": "/factories",
+        "file": "docs/backend-spec/2026-04-01_TAI_Backend_MEMORY_final__taiapi.md"
+      }
+    ]
+  },
+  {
+    "name": "debug",
+    "lines": 117,
+    "prefix": "",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "/debug/env-check",
+        "full_path": "/debug/env-check",
+        "handler": "debug_env_check"
+      },
+      {
+        "method": "GET",
+        "route": "/debug/db-columns",
+        "full_path": "/debug/db-columns",
+        "handler": "debug_db_columns"
+      },
+      {
+        "method": "POST",
+        "route": "/debug/billing-test",
+        "full_path": "/debug/billing-test",
+        "handler": "debug_billing_test"
+      }
+    ],
+    "services": [
+      "payment_helpers"
+    ],
+    "db_tables": [
+      "subscriptions"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "DEAD",
+    "reason": "임시 debug (해결 후 삭제)",
+    "frontend_refs": [
+      {
+        "endpoint": "/debug/db-columns",
+        "file": "docs/billing/2026-04-29_BILLING_DEBUG_REPORT__taiapi.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/debug/db-columns",
+        "file": "docs/billing/2026-04-29_BILLING_DEBUG_REPORT__taiapi.md"
+      }
+    ]
+  },
+  {
+    "name": "emergency_report",
+    "lines": 149,
+    "prefix": "/emergency",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "POST",
+        "route": "/report",
+        "full_path": "/emergency/report",
+        "handler": "create_emergency_report"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "emergency_reports",
+      "users"
+    ],
+    "router_imports": [
+      "auth"
+    ],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 5건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_frontend__taiadmin.md"
+      },
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_backend__taiapi.md"
+      },
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/workorder/2026-04-25_WORK_ORDER_pwa_finish_index__taiadmin.md"
+      },
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_index__taiadmin.md"
+      },
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/uncategorized/2026-04-24_PWA_APP_REVIEW__taiadmin.md"
+      },
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/uncategorized/2026-04-25_PWA_WORK_VERIFICATION__taiadmin.md"
+      },
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/uncategorized/2026-04-24_PWA_REVIEW_FOLLOWUP__taiadmin.md"
+      },
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/uncategorized/2026-04-25_RELEASE_READINESS_CHECK__taiadmin.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_frontend__taiadmin.md"
+      },
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_backend__taiapi.md"
+      },
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/workorder/2026-04-25_WORK_ORDER_pwa_finish_index__taiadmin.md"
+      },
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_index__taiadmin.md"
+      },
+      {
+        "endpoint": "/emergency/report",
+        "file": "docs/uncategorized/2026-04-24_PWA_APP_REVIEW__taiadmin.md"
+      }
+    ]
+  },
+  {
+    "name": "feature_flags",
+    "lines": 123,
+    "prefix": "/feature-flags",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "",
+        "full_path": "/feature-flags/",
+        "handler": "get_feature_flags"
+      },
+      {
+        "method": "GET",
+        "route": "/all",
+        "full_path": "/feature-flags/all",
+        "handler": "get_all_features"
+      }
+    ],
+    "services": [
+      "legal_rules"
+    ],
+    "db_tables": [
+      "factory_features"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 5건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/backend-spec/2026-04-01_TAI_Backend_MEMORY_final__taiapi.md"
+      },
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/backend-spec/2026-04-01_TAI_백엔드_작업지시서_B-FEAT-001_섹터플랜_FeatureFlag__taiapi.md"
+      },
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/cursor-task/2026-05-07_CURSOR_TASK_admin_sector__taiadmin.md"
+      },
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/uncategorized/2026-04-01_TAI_기획_셀터플랜_블록제어_개념설계__taiadmin.md"
+      },
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/uncategorized/2026-04-01_TAI_프론트_작업지시서_F-FEAT-001_섹터플랜_FeatureFlag__taiadmin.md"
+      },
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/uncategorized/2026-05-07_SECTOR_CODE_IMPACT__taiadmin.md"
+      },
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/uncategorized/2026-04-01_TAI_Frontend_MEMORY_final__taiadmin.md"
+      },
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/uncategorized/2026-04-01_TAI_Frontend_MEMORY_night__taiadmin.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/backend-spec/2026-04-01_TAI_Backend_MEMORY_final__taiapi.md"
+      },
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/backend-spec/2026-04-01_TAI_백엔드_작업지시서_B-FEAT-001_섹터플랜_FeatureFlag__taiapi.md"
+      },
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/cursor-task/2026-05-07_CURSOR_TASK_admin_sector__taiadmin.md"
+      },
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/uncategorized/2026-04-01_TAI_기획_셀터플랜_블록제어_개념설계__taiadmin.md"
+      },
+      {
+        "endpoint": "/feature-flags",
+        "file": "docs/uncategorized/2026-04-01_TAI_프론트_작업지시서_F-FEAT-001_섹터플랜_FeatureFlag__taiadmin.md"
+      }
+    ]
+  },
+  {
+    "name": "fix_matching_api",
+    "lines": 103,
+    "prefix": "/matching/requests",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "POST",
+        "route": "",
+        "full_path": "/matching/requests/",
+        "handler": "create_service_request"
+      },
+      {
+        "method": "GET",
+        "route": "",
+        "full_path": "/matching/requests/",
+        "handler": "list_service_requests"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "fix_service_requests"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 1건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/matching/requests",
+        "file": "nexas/docs/workorder-provider-register-frontend.md"
+      },
+      {
+        "endpoint": "/matching/requests",
+        "file": "docs/uncategorized/TAI_API_백엔드_작업내역__taiadmin.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/matching/requests",
+        "file": "docs/uncategorized/TAI_API_백엔드_작업내역__taiadmin.md"
+      }
+    ]
+  },
+  {
+    "name": "industry",
+    "lines": 137,
+    "prefix": "/industry",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "/search",
+        "full_path": "/industry/search",
+        "handler": "search_industry"
+      },
+      {
+        "method": "GET",
+        "route": "/lv1",
+        "full_path": "/industry/lv1",
+        "handler": "get_lv1"
+      },
+      {
+        "method": "GET",
+        "route": "/lv2",
+        "full_path": "/industry/lv2",
+        "handler": "get_lv2"
+      },
+      {
+        "method": "GET",
+        "route": "/lv3",
+        "full_path": "/industry/lv3",
+        "handler": "get_lv3"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "industry_master"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 1건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/industry/search",
+        "file": "docs/cursor-task/2026-03-31_TAI_Cursor_작업지시서_회사등록_온보딩__taiadmin.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/industry/search",
+        "file": "docs/cursor-task/2026-03-31_TAI_Cursor_작업지시서_회사등록_온보딩__taiadmin.md"
+      }
+    ]
+  },
+  {
+    "name": "kin_generate",
+    "lines": 169,
+    "prefix": "/kin",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "POST",
+        "route": "/generate",
+        "full_path": "/kin/generate",
+        "handler": "manual_generate"
+      },
+      {
+        "method": "POST",
+        "route": "/collect",
+        "full_path": "/kin/collect",
+        "handler": "manual_collect"
+      },
+      {
+        "method": "GET",
+        "route": "/pending-count",
+        "full_path": "/kin/pending-count",
+        "handler": "pending_count"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "naver_kin_log"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "구현·미등록 (3 ep, 3 tbl)",
+    "frontend_refs": [],
+    "frontend_refs_strict": [],
+    "doc_refs": []
+  },
+  {
+    "name": "posts",
+    "lines": 317,
+    "prefix": "/posts",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "/latest",
+        "full_path": "/posts/latest",
+        "handler": "get_latest_posts"
+      },
+      {
+        "method": "GET",
+        "route": "/stats/today",
+        "full_path": "/posts/stats/today",
+        "handler": "get_today_stats"
+      },
+      {
+        "method": "GET",
+        "route": "",
+        "full_path": "/posts/",
+        "handler": "get_posts"
+      },
+      {
+        "method": "GET",
+        "route": "/{post_id}",
+        "full_path": "/posts/{post_id}",
+        "handler": "get_post"
+      },
+      {
+        "method": "POST",
+        "route": "",
+        "full_path": "/posts/",
+        "handler": "create_post"
+      },
+      {
+        "method": "PATCH",
+        "route": "/{post_id}",
+        "full_path": "/posts/{post_id}",
+        "handler": "update_post"
+      },
+      {
+        "method": "DELETE",
+        "route": "/{post_id}",
+        "full_path": "/posts/{post_id}",
+        "handler": "delete_post"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "posts"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ACTIVE",
+    "reason": "프론트 HTML/JS 참조 2건",
+    "frontend_refs": [
+      {
+        "endpoint": "/posts/latest",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/posts/latest",
+        "file": "docs/backend-spec/TAI_Backend_작업지시서_안전정보게시판_공공API__taiapi.md"
+      },
+      {
+        "endpoint": "/posts/latest",
+        "file": "docs/SESSION_20260409.md"
+      },
+      {
+        "endpoint": "/posts/latest",
+        "file": "docs/business/TAI_안전정보게시판_기획서__taiadmin.md"
+      },
+      {
+        "endpoint": "/posts/latest",
+        "file": "docs/session-log/2026-04-09_SESSION.md"
+      },
+      {
+        "endpoint": "/posts/latest",
+        "file": "docs/session-log/2026-04-10_SESSION__taiapi.md"
+      },
+      {
+        "endpoint": "/posts/stats/today",
+        "file": "nexas/assets/js/tai-safety-posts.js"
+      },
+      {
+        "endpoint": "/posts",
+        "file": "nexas/node_modules/type-fest/source/observable-like.d.ts"
+      },
+      {
+        "endpoint": "/posts",
+        "file": "nexas/node_modules/mime-types/node_modules/mime-db/db.json"
+      },
+      {
+        "endpoint": "/posts",
+        "file": "nexas/node_modules/mime-db/db.json"
+      },
+      {
+        "endpoint": "/posts",
+        "file": "nexas/assets/js/tai-safety-detail.js"
+      },
+      {
+        "endpoint": "/posts",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      }
+    ],
+    "frontend_refs_strict": [
+      {
+        "endpoint": "/posts/stats/today",
+        "file": "nexas/assets/js/tai-safety-posts.js"
+      },
+      {
+        "endpoint": "/posts",
+        "file": "nexas/assets/js/tai-safety-detail.js"
+      }
+    ],
+    "doc_refs": [
+      {
+        "endpoint": "/posts/latest",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/posts/latest",
+        "file": "docs/backend-spec/TAI_Backend_작업지시서_안전정보게시판_공공API__taiapi.md"
+      },
+      {
+        "endpoint": "/posts/latest",
+        "file": "docs/SESSION_20260409.md"
+      },
+      {
+        "endpoint": "/posts/latest",
+        "file": "docs/business/TAI_안전정보게시판_기획서__taiadmin.md"
+      },
+      {
+        "endpoint": "/posts/latest",
+        "file": "docs/session-log/2026-04-09_SESSION.md"
+      },
+      {
+        "endpoint": "/posts",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/posts",
+        "file": "docs/TASK_안전정보_프론트엔드_20260411.md"
+      }
+    ]
+  },
+  {
+    "name": "process_management",
+    "lines": 378,
+    "prefix": "/process-management",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "POST",
+        "route": "",
+        "full_path": "/process-management/",
+        "handler": "create_process"
+      },
+      {
+        "method": "GET",
+        "route": "",
+        "full_path": "/process-management/",
+        "handler": "get_process_list"
+      },
+      {
+        "method": "GET",
+        "route": "/lv1-list",
+        "full_path": "/process-management/lv1-list",
+        "handler": "get_process_lv1_list"
+      },
+      {
+        "method": "GET",
+        "route": "/{process_id}",
+        "full_path": "/process-management/{process_id}",
+        "handler": "get_process_detail"
+      },
+      {
+        "method": "GET",
+        "route": "/{process_id}/equipments",
+        "full_path": "/process-management/{process_id}/equipments",
+        "handler": "get_process_equipments"
+      },
+      {
+        "method": "GET",
+        "route": "/{process_id}/factories",
+        "full_path": "/process-management/{process_id}/factories",
+        "handler": "get_process_factories"
+      },
+      {
+        "method": "PATCH",
+        "route": "/{process_id}",
+        "full_path": "/process-management/{process_id}",
+        "handler": "update_process"
+      },
+      {
+        "method": "DELETE",
+        "route": "/{process_id}",
+        "full_path": "/process-management/{process_id}",
+        "handler": "delete_process"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "factory_process",
+      "ksic_process_map",
+      "process_equipment_map",
+      "v_process_unified"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 5건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/process-management",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/process-management",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiadmin_dup.md"
+      },
+      {
+        "endpoint": "/process-management",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiadmin.md"
+      },
+      {
+        "endpoint": "/process-management",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/process-management",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY_final__taiapi.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/process-management",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/process-management",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiadmin_dup.md"
+      },
+      {
+        "endpoint": "/process-management",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiadmin.md"
+      },
+      {
+        "endpoint": "/process-management",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/process-management",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY_final__taiapi.md"
+      }
+    ]
+  },
+  {
+    "name": "roles",
+    "lines": 68,
+    "prefix": "/roles",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "",
+        "full_path": "/roles/",
+        "handler": "get_roles"
+      },
+      {
+        "method": "GET",
+        "route": "/{role_id}",
+        "full_path": "/roles/{role_id}",
+        "handler": "get_role"
+      },
+      {
+        "method": "POST",
+        "route": "",
+        "full_path": "/roles/",
+        "handler": "create_role"
+      },
+      {
+        "method": "PATCH",
+        "route": "/{role_id}",
+        "full_path": "/roles/{role_id}",
+        "handler": "update_role"
+      },
+      {
+        "method": "GET",
+        "route": "/{role_id}/permissions",
+        "full_path": "/roles/{role_id}/permissions",
+        "handler": "get_role_permissions"
+      },
+      {
+        "method": "GET",
+        "route": "/{role_id}/menus",
+        "full_path": "/roles/{role_id}/menus",
+        "handler": "get_role_menus"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "role_menu_permissions",
+      "role_permissions",
+      "roles"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 3건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/roles",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/roles",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/roles",
+        "file": "docs/uncategorized/TAI_MASTER_CONTEXT__taiadmin.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/roles",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/roles",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/roles",
+        "file": "docs/uncategorized/TAI_MASTER_CONTEXT__taiadmin.md"
+      }
+    ]
+  },
+  {
+    "name": "slack_kin",
+    "lines": 242,
+    "prefix": "/slack/kin",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "POST",
+        "route": "/interactions",
+        "full_path": "/slack/kin/interactions",
+        "handler": "slack_interactions"
+      },
+      {
+        "method": "POST",
+        "route": "/approve",
+        "full_path": "/slack/kin/approve",
+        "handler": "slack_approve_alias"
+      },
+      {
+        "method": "GET",
+        "route": "/health",
+        "full_path": "/slack/kin/health",
+        "handler": "slack_kin_health"
+      }
+    ],
+    "services": [
+      "kin_draft_safety",
+      "kin_playwright_runner",
+      "slack_signature_verifier"
+    ],
+    "db_tables": [
+      "naver_kin_log"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "구현·미등록 (3 ep, 3 tbl)",
+    "frontend_refs": [],
+    "frontend_refs_strict": [],
+    "doc_refs": []
+  },
+  {
+    "name": "teams",
+    "lines": 38,
+    "prefix": "/teams",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "",
+        "full_path": "/teams/",
+        "handler": "get_teams"
+      },
+      {
+        "method": "GET",
+        "route": "/{team_id}",
+        "full_path": "/teams/{team_id}",
+        "handler": "get_team"
+      },
+      {
+        "method": "POST",
+        "route": "",
+        "full_path": "/teams/",
+        "handler": "create_team"
+      },
+      {
+        "method": "PATCH",
+        "route": "/{team_id}",
+        "full_path": "/teams/{team_id}",
+        "handler": "update_team"
+      },
+      {
+        "method": "DELETE",
+        "route": "/{team_id}",
+        "full_path": "/teams/{team_id}",
+        "handler": "delete_team"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "teams"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 3건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/teams",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/teams",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/teams",
+        "file": "docs/uncategorized/TAI_MASTER_CONTEXT__taiadmin.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/teams",
+        "file": "docs/backend-spec/2026-03-28_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/teams",
+        "file": "docs/backend-spec/2026-03-29_TAI_Backend_MEMORY__taiapi.md"
+      },
+      {
+        "endpoint": "/teams",
+        "file": "docs/uncategorized/TAI_MASTER_CONTEXT__taiadmin.md"
+      }
+    ]
+  },
+  {
+    "name": "uploads",
+    "lines": 88,
+    "prefix": "/uploads",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "POST",
+        "route": "/inspection-photo",
+        "full_path": "/uploads/inspection-photo",
+        "handler": "post_inspection_photo"
+      }
+    ],
+    "services": [],
+    "db_tables": [],
+    "router_imports": [
+      "auth"
+    ],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 5건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_frontend__taiadmin.md"
+      },
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_backend__taiapi.md"
+      },
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/workorder/2026-04-25_WORK_ORDER_pwa_frontend_finish__taiadmin.md"
+      },
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/workorder/2026-04-25_WORK_ORDER_pwa_finish_index__taiadmin.md"
+      },
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_index__taiadmin.md"
+      },
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/uncategorized/2026-04-25_PWA_WORK_VERIFICATION__taiadmin.md"
+      },
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/uncategorized/2026-04-24_PWA_REVIEW_FOLLOWUP__taiadmin.md"
+      },
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/uncategorized/2026-04-25_RELEASE_READINESS_CHECK__taiadmin.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_frontend__taiadmin.md"
+      },
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_backend__taiapi.md"
+      },
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/workorder/2026-04-25_WORK_ORDER_pwa_frontend_finish__taiadmin.md"
+      },
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/workorder/2026-04-25_WORK_ORDER_pwa_finish_index__taiadmin.md"
+      },
+      {
+        "endpoint": "/uploads/inspection-photo",
+        "file": "docs/workorder/2026-04-24_WORK_ORDER_pwa_index__taiadmin.md"
+      }
+    ]
+  },
+  {
+    "name": "workflow_integrity",
+    "lines": 118,
+    "prefix": "/workflow/integrity",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "GET",
+        "route": "/rules/list",
+        "full_path": "/workflow/integrity/rules/list",
+        "handler": "api_list_rules"
+      },
+      {
+        "method": "GET",
+        "route": "/events/{workflow_id}",
+        "full_path": "/workflow/integrity/events/{workflow_id}",
+        "handler": "api_get_events"
+      },
+      {
+        "method": "PATCH",
+        "route": "/events/{event_id}/resolve",
+        "full_path": "/workflow/integrity/events/{event_id}/resolve",
+        "handler": "api_resolve_event"
+      },
+      {
+        "method": "POST",
+        "route": "/{workflow_id}/evaluate",
+        "full_path": "/workflow/integrity/{workflow_id}/evaluate",
+        "handler": "api_evaluate_workflow"
+      },
+      {
+        "method": "GET",
+        "route": "/{workflow_id}",
+        "full_path": "/workflow/integrity/{workflow_id}",
+        "handler": "api_integrity_timeline"
+      }
+    ],
+    "services": [],
+    "db_tables": [],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 1건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/workflow/integrity",
+        "file": "docs/notification-engine-phase1-plan.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/workflow/integrity",
+        "file": "docs/notification-engine-phase1-plan.md"
+      }
+    ]
+  },
+  {
+    "name": "tbm_issue",
+    "lines": 48,
+    "prefix": "/tbm",
+    "registered": false,
+    "endpoints": [
+      {
+        "method": "PATCH",
+        "route": "/{tbm_id}/attendees/{attendee_id}/issue",
+        "full_path": "/tbm/{tbm_id}/attendees/{attendee_id}/issue",
+        "handler": "update_attendee_issue"
+      }
+    ],
+    "services": [],
+    "db_tables": [
+      "tbm_attendees"
+    ],
+    "router_imports": [],
+    "capabilities": [],
+    "classification": "ORPHAN",
+    "reason": "문서 참조만 5건 (FE 미연결·미등록)",
+    "frontend_refs": [
+      {
+        "endpoint": "/tbm",
+        "file": "docs/backend-spec/2026-04-01_TAI_Backend_MEMORY__taiadmin.md"
+      },
+      {
+        "endpoint": "/tbm",
+        "file": "docs/backend-spec/2026-04-01_TAI_백엔드_작업지시서_B-FEAT-001_섹터플랜_FeatureFlag__taiapi.md"
+      },
+      {
+        "endpoint": "/tbm",
+        "file": "docs/devops/auto-qa-policy__taiapi.md"
+      },
+      {
+        "endpoint": "/tbm",
+        "file": "docs/cursor-task/2026-03-31_TAI_Cursor_작업지시서_TBM_안전회의_위험성평가__taiadmin.md"
+      },
+      {
+        "endpoint": "/tbm",
+        "file": "docs/2026-05-25_e2e_open_verification.md"
+      },
+      {
+        "endpoint": "/tbm",
+        "file": "docs/notification-platform/existing-push-call-registry.md"
+      },
+      {
+        "endpoint": "/tbm",
+        "file": "docs/notification-platform/fcm-existing-runtime-analysis.md"
+      },
+      {
+        "endpoint": "/tbm",
+        "file": "docs/notification-platform/push-infrastructure-inventory.md"
+      }
+    ],
+    "frontend_refs_strict": [],
+    "doc_refs": [
+      {
+        "endpoint": "/tbm",
+        "file": "docs/backend-spec/2026-04-01_TAI_Backend_MEMORY__taiadmin.md"
+      },
+      {
+        "endpoint": "/tbm",
+        "file": "docs/backend-spec/2026-04-01_TAI_백엔드_작업지시서_B-FEAT-001_섹터플랜_FeatureFlag__taiapi.md"
+      },
+      {
+        "endpoint": "/tbm",
+        "file": "docs/devops/auto-qa-policy__taiapi.md"
+      },
+      {
+        "endpoint": "/tbm",
+        "file": "docs/cursor-task/2026-03-31_TAI_Cursor_작업지시서_TBM_안전회의_위험성평가__taiadmin.md"
+      },
+      {
+        "endpoint": "/tbm",
+        "file": "docs/2026-05-25_e2e_open_verification.md"
+      }
+    ]
+  }
+]
